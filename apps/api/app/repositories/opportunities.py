@@ -1,0 +1,28 @@
+from copy import deepcopy
+from datetime import UTC, datetime
+from typing import Protocol
+from uuid import uuid4
+
+from pymongo.collection import Collection
+
+
+class OpportunityRepository(Protocol):
+    def create(self, owner_id: str, data: dict) -> dict: ...
+    def list_for_owner(self, owner_id: str) -> list[dict]: ...
+
+
+class InMemoryOpportunityRepository:
+    def __init__(self) -> None: self.records: list[dict] = []
+    def create(self, owner_id: str, data: dict) -> dict:
+        record = {"_id": str(uuid4()), "owner_id": owner_id, **deepcopy(data), "created_at": datetime.now(UTC)}
+        self.records.append(record); return deepcopy(record)
+    def list_for_owner(self, owner_id: str) -> list[dict]: return [deepcopy(record) for record in self.records if record["owner_id"] == owner_id]
+
+
+class MongoOpportunityRepository:
+    def __init__(self, collection: Collection) -> None:
+        self.collection = collection; self.collection.create_index([("owner_id", 1), ("created_at", -1)])
+    def create(self, owner_id: str, data: dict) -> dict:
+        record = {"_id": str(uuid4()), "owner_id": owner_id, **data, "created_at": datetime.now(UTC)}
+        self.collection.insert_one(record); return record
+    def list_for_owner(self, owner_id: str) -> list[dict]: return list(self.collection.find({"owner_id": owner_id}).sort("created_at", -1))

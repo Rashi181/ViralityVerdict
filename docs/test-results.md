@@ -77,3 +77,10 @@ The first M1 test run failed during collection because `Protocol` was imported f
 | Source-unavailable fallback | Pass: no source returns an explicit unavailable state with no claimed current trend |
 | Provenance, freshness, and owner isolation | Pass: imported source URL and timestamps persist, freshness is calculated, and another owner cannot read the signal |
 | Full regression | Pass: 11 API tests, lint, typecheck, and production build passed; one existing third-party FastAPI/Starlette TestClient deprecation warning remains |
+
+## M6 Opportunities — 2026-11-13
+
+| Check | Result |
+| --- | --- |
+| Deterministic scoring and ownership | Pass: 80/60/50/90 inputs calculate to 69.5 using the versioned formula; missing source reduces confidence; second owner cannot read the saved opportunity |
+| Full regression | Pass: 12 API tests, lint, typecheck, and production build passed; one existing third-party FastAPI/Starlette TestClient deprecation warning remains |

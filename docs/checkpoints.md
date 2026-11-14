@@ -81,3 +81,13 @@
 - Known limitations and recovery: no live provider connector is configured. Import a documented, authorized observation with its original source URL; do not treat it as an Instagram performance claim.
 - User approval: approved
 - Commit/tag (only after approval): `feat: add trend intelligence`
+
+### M6 — Opportunities
+
+- Branch and base commit: `feat/m6-opportunities`, based on `976595a`
+- Scope: deterministic score service, opportunity persistence/API, evidence/reduced-confidence fields, and read UI.
+- Acceptance: Python calculates `0.35 × audience_fit + 0.30 × trend_relevance + 0.20 × novelty + 0.15 × feasibility`; components are bounded 0–100, evidence is required, and missing components reduce confidence.
+- Automated results: pass — 12 API tests, lint, typecheck, and production build.
+- Manual verification: user verified the deterministic opportunity score and reduced-confidence handling on 2026-11-14.
+- User approval: approved
+- Commit/tag: `feat: add opportunity scoring`
