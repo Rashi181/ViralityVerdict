@@ -142,3 +142,15 @@
 - Manual verification: user verified manual-handoff-required status and the no-publish disclosure on 2026-11-14.
 - User approval: approved
 - Commit/tag: `feat: add publishing eligibility gate`
+
+### M12 — Launch readiness
+
+- Branch and base commit: `feat/real-instagram-prep`, based on `8e1d32a`
+- Scope / changed files: deployment-safe cookie/origin configuration, API security response headers, a security regression suite, keyboard skip links/focus indicators, and `docs/demo-runbook.md`.
+- Dependencies and credentials: no external credentials or deployment access used. Real Meta OAuth, durable cloud services, and production monitoring remain separate blocked work.
+- Acceptance criteria: local demo path is documented; API security headers and configured-origin CORS are tested; HTTPS deployments can opt into secure session cookies; UI has a keyboard skip link; no live Instagram capability is claimed.
+- Automated results (pass/fail/skip with commands): pass — `pnpm test:api && pnpm lint && pnpm typecheck && pnpm build`; 19 API tests, lint, typecheck, and production build passed. One existing third-party FastAPI/Starlette TestClient deprecation warning remains. Playwright, a deployed environment, and an automated accessibility scanner were not configured, so they were not run.
+- Manual verification: user approved M12 on 2026-11-14.
+- Known limitations and recovery: read `docs/demo-runbook.md`; deployment and Meta OAuth must remain disabled until their credentials and review are ready.
+- User approval: approved
+- Commit/tag: pending checkpoint commit as `feat: add launch readiness safeguards`

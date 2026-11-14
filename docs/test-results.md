@@ -120,3 +120,12 @@ The first M1 test run failed during collection because `Protocol` was imported f
 | --- | --- |
 | Manual-handoff safety | Pass: no Meta config returns ineligible/manual-handoff status and explicitly says nothing was published |
 | Full regression | Pass: 17 API tests, lint, typecheck, and production build passed |
+
+## M12 Launch readiness — 2026-11-14
+
+| Check | Command | Result |
+| --- | --- | --- |
+| API/security regression | `pnpm test:api` | Pass: 19 tests passed, including configured-origin CORS, standard security headers, and secure-session-cookie behavior. One existing third-party FastAPI/Starlette TestClient deprecation warning remains. |
+| Web lint and typecheck | `pnpm lint && pnpm typecheck` | Pass |
+| Web production build | `pnpm build` | Pass: Next.js 16.4.6 generated `/`, `/sign-in`, `/sign-up`, and `/onboarding`. |
+| Playwright / automated accessibility scan | Not configured | Skipped, not passed. Manual keyboard verification remains required. |

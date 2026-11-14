@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 from pymongo import MongoClient
 
 from app.core.config import Settings
@@ -26,17 +27,29 @@ from app.routes.system import router as system_router
 from app.services.auth import AuthService
 
 
-def create_app(auth_service: AuthService | None = None, import_repository: ImportRepository | None = None, audience_repository: AudienceRepository | None = None, trend_repository: TrendRepository | None = None, opportunity_repository: OpportunityRepository | None = None, video_repository: VideoRepository | None = None) -> FastAPI:
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["Referrer-Policy"] = "no-referrer"
+        response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+        response.headers["Cache-Control"] = "no-store"
+        return response
+
+
+def create_app(auth_service: AuthService | None = None, import_repository: ImportRepository | None = None, audience_repository: AudienceRepository | None = None, trend_repository: TrendRepository | None = None, opportunity_repository: OpportunityRepository | None = None, video_repository: VideoRepository | None = None, settings: Settings | None = None) -> FastAPI:
     app = FastAPI(title="Verdict API", version="0.1.0", openapi_url="/api/v1/openapi.json")
-    app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"], allow_credentials=True, allow_methods=["GET", "POST", "PUT", "DELETE"], allow_headers=["Content-Type"])
+    configured_settings = settings or Settings.from_environment()
+    app.add_middleware(CORSMiddleware, allow_origins=list(configured_settings.web_origins), allow_credentials=True, allow_methods=["GET", "POST", "PUT"], allow_headers=["Content-Type"])
+    app.add_middleware(SecurityHeadersMiddleware)
     if auth_service is None:
-        settings = Settings.from_environment()
-        app.state.settings = settings
-        if not settings.mongodb_uri or not settings.session_secret:
+        app.state.settings = configured_settings
+        if not configured_settings.mongodb_uri or not configured_settings.session_secret:
             app.state.auth_service = None
         else:
-            client = MongoClient(settings.mongodb_uri, serverSelectionTimeoutMS=2000)
-            app.state.auth_service = AuthService(MongoUserRepository(client.verdict.users), settings.session_secret)
+            client = MongoClient(configured_settings.mongodb_uri, serverSelectionTimeoutMS=2000)
+            app.state.auth_service = AuthService(MongoUserRepository(client.verdict.users), configured_settings.session_secret)
             app.state.import_repository = MongoImportRepository(client.verdict.imports)
             app.state.audience_repository = MongoAudienceRepository(client.verdict.audience_aggregates, client.verdict.audience_feedback)
             app.state.trend_repository = MongoTrendRepository(client.verdict.trend_signals)
@@ -45,7 +58,7 @@ def create_app(auth_service: AuthService | None = None, import_repository: Impor
             app.state.planner_repository = MongoPlannerRepository(client.verdict.plans)
     else:
         app.state.auth_service = auth_service
-        app.state.settings = Settings(None, "test-session-secret-that-is-at-least-32-chars")
+        app.state.settings = settings or Settings(None, "test-session-secret-that-is-at-least-32-chars")
     if import_repository is not None: app.state.import_repository = import_repository
     elif not hasattr(app.state, "import_repository"): app.state.import_repository = InMemoryImportRepository()
     if audience_repository is not None: app.state.audience_repository = audience_repository

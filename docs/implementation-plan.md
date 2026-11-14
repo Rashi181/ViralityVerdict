@@ -32,7 +32,7 @@ M5 can run in parallel only after source authorization is verified. M10 and M11 
 | M9 Experiments/planner | experiment and plan repositories/routes; calendar/list UI; statuses; before/after versions | M1, M6, M8 | Items persist per owner and simulated/observed results remain distinct | CRUD/authz tests; planner E2E |
 | M10 Agent | typed read tools; server-side scoping; run/audit records; write preview/confirmation endpoints | M1, M3–M9; reasoning provider | Agent invokes real scoped tools; planner writes require confirmation | tool-schema/prompt-injection/authz/approval tests |
 | M11 Publishing/learning | publish eligibility checker; preview/approval/audit; Meta publisher; manual export/handoff; later metric sync | M2; current Meta approval/scopes | No API publish without exact approval; unavailable permissions show manual handoff; observed metrics remain observed | approval/token/error/idempotency tests; mock provider integration |
-| M12 Launch readiness | deployment config; accessibility/security review; fixture demo; runbook; observability | Working M0–M9 slice; approved hosting credentials | Repeatable demo, disclosed fallbacks, and documented setup/verification | production builds; Playwright path; accessibility scan; security regression |
+| M12 Launch readiness | deployment config; accessibility/security review; fixture demo; runbook; observability | Working M0–M9 slice; approved hosting credentials | Repeatable demo, disclosed fallbacks, and documented setup/verification | production builds; Playwright path; accessibility scan; security regression. **Implemented on `feat/real-instagram-prep`; awaiting manual verification.** |
 
 ## Feature completeness matrix
 

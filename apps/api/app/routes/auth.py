@@ -28,27 +28,34 @@ def current_user(request: Request, auth: AuthService = Depends(get_auth_service)
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication required") from error
 
 
-def set_session(response: Response, auth: AuthService, user_id: str) -> None:
-    response.set_cookie(SESSION_COOKIE, auth.issue_session(user_id), httponly=True, samesite="lax", secure=False, max_age=auth.session_hours * 3600)
+def set_session(request: Request, response: Response, auth: AuthService, user_id: str) -> None:
+    response.set_cookie(
+        SESSION_COOKIE,
+        auth.issue_session(user_id),
+        httponly=True,
+        samesite="lax",
+        secure=request.app.state.settings.cookie_secure,
+        max_age=auth.session_hours * 3600,
+    )
 
 
 @router.post("/auth/sign-up", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
-def sign_up(payload: SignUpRequest, response: Response, auth: AuthService = Depends(get_auth_service)) -> UserResponse:
+def sign_up(payload: SignUpRequest, request: Request, response: Response, auth: AuthService = Depends(get_auth_service)) -> UserResponse:
     try:
         user = auth.sign_up(email=str(payload.email), password=payload.password, display_name=payload.display_name)
     except EmailAlreadyExistsError as error:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Email already registered") from error
-    set_session(response, auth, user["_id"])
+    set_session(request, response, auth, user["_id"])
     return user_response(user)
 
 
 @router.post("/auth/sign-in", response_model=UserResponse)
-def sign_in(payload: SignInRequest, response: Response, auth: AuthService = Depends(get_auth_service)) -> UserResponse:
+def sign_in(payload: SignInRequest, request: Request, response: Response, auth: AuthService = Depends(get_auth_service)) -> UserResponse:
     try:
         user = auth.sign_in(email=str(payload.email), password=payload.password)
     except AuthenticationError as error:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password") from error
-    set_session(response, auth, user["_id"])
+    set_session(request, response, auth, user["_id"])
     return user_response(user)
 
 

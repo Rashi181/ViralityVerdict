@@ -17,7 +17,7 @@ Last audited: 2026-11-13. Source: repository commit `5af463e`.
 | M9 Planner | Approved; checkpointed | Owner-scoped plan persistence, explicit planning statuses, and planner UI manually verified on `feat/m9-planner-experiments` |
 | M10 Strategist | Approved; checkpointed | Authenticated read-tool inventory and explicit provider-unavailable state manually verified on `feat/m10-strategist` |
 | M11 Publishing | Approved; checkpointed | Eligibility gate, explicit manual handoff, and no-publish disclosure manually verified on `feat/m11-publishing-learning` |
-| M12 application code | Not started | Planned in the approved implementation plan |
+| M12 Launch readiness | Approved; checkpoint pending | Security headers, production cookie/origin configuration, accessibility baseline, repeatable demo runbook, and security regression tests manually approved on `feat/real-instagram-prep` |
 | Architecture plan | Approved | `docs/implementation-plan.md` |
 | Product feature coverage | Planned | M0–M12 matrix covers every specified surface; no niche-switch feature included |
 | External integrations | Unverified / blocked pending credentials | See implementation plan and known issues |

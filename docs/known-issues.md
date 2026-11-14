@@ -16,4 +16,5 @@
 | DEV-002 | Low | Open | FastAPI test client emitted a third-party deprecation warning | Track upstream FastAPI/Starlette/httpx compatibility; tests pass and no product behavior is affected |
 | DEV-003 | Medium | Open | Docker Compose is installed but the Docker daemon is not running, preventing local MongoDB verification | Start Docker Desktop, then run `docker compose up -d mongodb` before M1 manual verification |
 | EXT-006 | High | Open | Meta app credentials, OAuth configuration, permissions, and app review are not supplied | M2 exposes `not_configured` status and supports authorized import/demo fallback; do not claim a live connection |
+| M12-001 | Medium | Open | No deployed HTTPS environment, production persistence/storage/queue, monitoring, Playwright suite, or automated accessibility scan is configured. | M12 provides local runbook and security regression only; perform a staging deployment and the documented deployment checklist before any real account connection. |
 | GOV-001 | Low | Resolved | Initial workspace was empty | Main branch pulled; specification and instructions now present |

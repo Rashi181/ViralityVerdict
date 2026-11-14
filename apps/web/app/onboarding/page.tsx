@@ -11,4 +11,4 @@ import { Optimizer } from "../../features/optimization/Optimizer";
 import { Planner } from "../../features/planner/Planner";
 import { Strategist } from "../../features/strategist/Strategist";
 import { PublishingEligibility } from "../../features/publishing/PublishingEligibility";
-export default function OnboardingPage() { return <main><OnboardingForm /><InstagramStatus /><CsvImportForm /><DemoImportButton /><CreatorSummary /><AudiencePersonaPanel /><TrendFeed /><OpportunityList /><VideoUpload /><Optimizer /><Planner /><Strategist /><PublishingEligibility /></main>; }
+export default function OnboardingPage() { return <main id="main-content" tabIndex={-1}><OnboardingForm /><InstagramStatus /><CsvImportForm /><DemoImportButton /><CreatorSummary /><AudiencePersonaPanel /><TrendFeed /><OpportunityList /><VideoUpload /><Optimizer /><Planner /><Strategist /><PublishingEligibility /></main>; }
