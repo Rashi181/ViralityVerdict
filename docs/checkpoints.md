@@ -112,3 +112,13 @@
 - Manual verification: user verified all four caption styles and the safe limitation labels on 2026-11-14.
 - User approval: approved
 - Commit/tag: `feat: add safe reel optimization`
+
+### M9 — Planner
+
+- Branch: `feat/m9-planner-experiments`, based on `7671d61`
+- Scope: owner-scoped content plan persistence, statuses, planned dates, and UI.
+- Acceptance: status means planning state only and never implies publishing; records are tenant-isolated.
+- Automated results: pass — 15 API tests, lint, typecheck, production build.
+- Manual verification: user verified saving a scheduled planner item and the non-publishing status disclosure on 2026-11-14.
+- User approval: approved
+- Commit/tag: `feat: add content planner`

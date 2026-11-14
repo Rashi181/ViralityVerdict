@@ -99,3 +99,10 @@ The first M1 test run failed during collection because `Protocol` was imported f
 | Caption-style contract | Pass: exactly formal, sarcastic, humorous-tech, and humorous-non-tech variants are returned |
 | Safety fallback | Pass: persona reactions remain empty and timestamped findings are withheld without evidence-backed media analysis |
 | Full regression | Pass: 14 API tests, lint, typecheck, and production build passed |
+
+## M9 Planner — 2026-11-14
+
+| Check | Result |
+| --- | --- |
+| Owner-scoped planning | Pass: one owner can save/list a scheduled plan while a second owner sees no items |
+| Full regression | Pass: 15 API tests, lint, typecheck, and production build passed |

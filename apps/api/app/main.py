@@ -9,6 +9,7 @@ from app.repositories.audience import AudienceRepository, InMemoryAudienceReposi
 from app.repositories.trends import TrendRepository, InMemoryTrendRepository, MongoTrendRepository
 from app.repositories.opportunities import OpportunityRepository, InMemoryOpportunityRepository, MongoOpportunityRepository
 from app.repositories.videos import VideoRepository, InMemoryVideoRepository, MongoVideoRepository
+from app.repositories.planner import InMemoryPlannerRepository, MongoPlannerRepository
 from app.routes.auth import router as auth_router
 from app.routes.imports import router as imports_router
 from app.routes.instagram import router as instagram_router
@@ -18,6 +19,7 @@ from app.routes.trends import router as trends_router
 from app.routes.opportunities import router as opportunities_router
 from app.routes.videos import router as videos_router
 from app.routes.optimization import router as optimization_router
+from app.routes.planner import router as planner_router
 from app.routes.system import router as system_router
 from app.services.auth import AuthService
 
@@ -38,6 +40,7 @@ def create_app(auth_service: AuthService | None = None, import_repository: Impor
             app.state.trend_repository = MongoTrendRepository(client.verdict.trend_signals)
             app.state.opportunity_repository = MongoOpportunityRepository(client.verdict.opportunities)
             app.state.video_repository = MongoVideoRepository(client.verdict.video_jobs)
+            app.state.planner_repository = MongoPlannerRepository(client.verdict.plans)
     else:
         app.state.auth_service = auth_service
         app.state.settings = Settings(None, "test-session-secret-that-is-at-least-32-chars")
@@ -51,6 +54,7 @@ def create_app(auth_service: AuthService | None = None, import_repository: Impor
     elif not hasattr(app.state, "opportunity_repository"): app.state.opportunity_repository = InMemoryOpportunityRepository()
     if video_repository is not None: app.state.video_repository = video_repository
     elif not hasattr(app.state, "video_repository"): app.state.video_repository = InMemoryVideoRepository()
+    if not hasattr(app.state,"planner_repository"): app.state.planner_repository=InMemoryPlannerRepository()
     app.include_router(system_router, prefix="/api/v1", tags=["system"])
     app.include_router(auth_router, prefix="/api/v1", tags=["auth"])
     app.include_router(imports_router, prefix="/api/v1", tags=["imports"])
@@ -61,6 +65,7 @@ def create_app(auth_service: AuthService | None = None, import_repository: Impor
     app.include_router(opportunities_router, prefix="/api/v1", tags=["opportunities"])
     app.include_router(videos_router, prefix="/api/v1", tags=["videos"])
     app.include_router(optimization_router, prefix="/api/v1", tags=["optimization"])
+    app.include_router(planner_router,prefix="/api/v1",tags=["planner"])
     return app
 
 
