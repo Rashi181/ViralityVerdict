@@ -91,3 +91,14 @@
 - Manual verification: user verified the deterministic opportunity score and reduced-confidence handling on 2026-11-14.
 - User approval: approved
 - Commit/tag: `feat: add opportunity scoring`
+
+### M7 — Video processing
+
+- Branch and base commit: `feat/m7-video-processing`, based on `7ce2641`
+- Scope: private local development upload, MIME/signature/size validation, owner-scoped persisted jobs, and real FFmpeg metadata extraction.
+- Acceptance: an authorized MP4/WebM up to 25 MB is never given a public URL and reaches an honest terminal state with real metadata or an explicit failure.
+- Automated results: pass — 13 API tests, lint, typecheck, and production build.
+- Manual verification: user verified private draft upload and the honest local FFmpeg processing result on 2026-11-14.
+- Limitations: only FFmpeg metadata runs. RQ/Redis workers, scene extraction, transcript, OCR, model analysis, and object storage are not configured; no result is fabricated.
+- User approval: approved
+- Commit/tag: `feat: add private video processing`

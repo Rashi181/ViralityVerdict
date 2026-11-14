@@ -1,0 +1,4 @@
+"use client";
+import { useState } from "react";
+import { request } from "../../lib/api";
+export function VideoUpload(){const [message,setMessage]=useState<string>();return <form className="panel" action={async(data)=>{try{const body=new FormData();body.set("file",data.get("file") as File);const job=await request<{status:string;error:string|null}>("/videos",{method:"POST",body});setMessage(`Job ${job.status}.${job.error?` ${job.error}`:""}`)}catch(error){setMessage(error instanceof Error?error.message:"Upload failed")}}}><h2>Private draft Reel upload</h2><p>MP4/WebM only, up to 25 MB. Your file is stored privately for local development; no public URL is created.</p><label>Draft video<input name="file" type="file" accept="video/mp4,video/webm" required/></label><button type="submit">Upload draft</button>{message&&<p role="status">{message}</p>}</form>}
