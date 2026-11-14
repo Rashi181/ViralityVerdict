@@ -1,6 +1,6 @@
 # Feature status
 
-Last audited: 2026-11-14. Source: repository commit `eb39602`.
+Last audited: 2026-11-14. Source: M15 implementation checkpoint `a71a9c6`.
 
 | Area | Status | Evidence / next gate |
 | --- | --- | --- |
@@ -20,7 +20,7 @@ Last audited: 2026-11-14. Source: repository commit `eb39602`.
 | M12 Launch readiness | Approved; checkpointed | Security headers, production cookie/origin configuration, accessibility baseline, repeatable demo runbook, and security regression tests manually approved and committed on `feat/real-instagram-prep` |
 | M13 Guided workspace and Caption & Hashtag Studio | Approved; checkpointed | Focused product pages, shared navigation shell, general caption options, free-text refinement prompt, source-labeled deterministic hashtag suggestions, and no exposed synthetic imports on `feat/real-instagram-prep` |
 | M14 Reel-analysis foundation | Approved; checkpointed | Private hybrid FFmpeg frame sampling, owner-scoped evidence endpoint, and Reel Readiness UI with honest AI-analysis-pending state on `feat/real-instagram-prep` |
-| M15 Read-only Instagram safety foundation | Approved; checkpoint commit pending | Encrypted token vault, permanent read-only policy, owner-scoped disconnect/audit records, safety UI, and caption-keyword evidence were manually approved on `feat/real-instagram-prep` |
+| M15 Read-only Instagram safety foundation | Approved; checkpointed | Encrypted token vault, permanent read-only policy, owner-scoped disconnect/audit records, safety UI, and caption-keyword evidence were manually approved and checkpointed as `a71a9c6` on `feat/real-instagram-prep` |
 | Architecture plan | Approved | `docs/implementation-plan.md` |
 | Product feature coverage | Planned | M0–M12 matrix covers every specified surface; no niche-switch feature included |
 | External integrations | Unverified / blocked pending credentials | See implementation plan and known issues |

@@ -4,11 +4,11 @@
 
 - Date: 2026-11-14
 - Branch: `feat/real-instagram-prep`
-- Commit: based on M14 checkpoint `7c50063`; M15 is ready for its approved checkpoint commit
+- Commit: M15 implementation checkpoint `a71a9c6`
 - Milestone: M15 Read-only Instagram safety foundation
 - Repository state: M15 manually verified and approved; automated regression checks pass
 - Approval status: approved by user after manual verification
-- Commits/pushes by Codex: M0–M14 checkpointed on their respective feature branches; M15 checkpoint commit pending
+- Commits/pushes by Codex: M0–M14 checkpointed on their respective feature branches; M15 implementation checkpoint `a71a9c6` is ready to push
 
 ### M0 — Foundation
 
@@ -187,4 +187,4 @@
 - Manual verification: user approved M15 on 2026-11-14.
 - Current blocker: live OAuth state/CSRF callback, remote token revocation, real sync, and deletion choices for future API-synced records must be completed and tested only after the approved Meta configuration exists. OAuth remains disabled.
 - User approval: approved
-- Commit/tag: pending approval
+- Commit/tag: `a71a9c6 feat: add read-only instagram safety controls`
