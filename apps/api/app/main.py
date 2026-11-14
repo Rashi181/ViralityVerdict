@@ -11,6 +11,7 @@ from app.repositories.trends import TrendRepository, InMemoryTrendRepository, Mo
 from app.repositories.opportunities import OpportunityRepository, InMemoryOpportunityRepository, MongoOpportunityRepository
 from app.repositories.videos import VideoRepository, InMemoryVideoRepository, MongoVideoRepository
 from app.repositories.planner import InMemoryPlannerRepository, MongoPlannerRepository
+from app.repositories.connections import ConnectionRepository, InMemoryConnectionRepository, MongoConnectionRepository
 from app.routes.auth import router as auth_router
 from app.routes.imports import router as imports_router
 from app.routes.instagram import router as instagram_router
@@ -38,7 +39,7 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         return response
 
 
-def create_app(auth_service: AuthService | None = None, import_repository: ImportRepository | None = None, audience_repository: AudienceRepository | None = None, trend_repository: TrendRepository | None = None, opportunity_repository: OpportunityRepository | None = None, video_repository: VideoRepository | None = None, settings: Settings | None = None) -> FastAPI:
+def create_app(auth_service: AuthService | None = None, import_repository: ImportRepository | None = None, audience_repository: AudienceRepository | None = None, trend_repository: TrendRepository | None = None, opportunity_repository: OpportunityRepository | None = None, video_repository: VideoRepository | None = None, settings: Settings | None = None, connection_repository: ConnectionRepository | None = None) -> FastAPI:
     app = FastAPI(title="Verdict API", version="0.1.0", openapi_url="/api/v1/openapi.json")
     configured_settings = settings or Settings.from_environment()
     app.add_middleware(CORSMiddleware, allow_origins=list(configured_settings.web_origins), allow_credentials=True, allow_methods=["GET", "POST", "PUT"], allow_headers=["Content-Type"])
@@ -56,6 +57,7 @@ def create_app(auth_service: AuthService | None = None, import_repository: Impor
             app.state.opportunity_repository = MongoOpportunityRepository(client.verdict.opportunities)
             app.state.video_repository = MongoVideoRepository(client.verdict.video_jobs)
             app.state.planner_repository = MongoPlannerRepository(client.verdict.plans)
+            app.state.connection_repository = MongoConnectionRepository(client.verdict.instagram_connections, client.verdict.instagram_audit)
     else:
         app.state.auth_service = auth_service
         app.state.settings = settings or Settings(None, "test-session-secret-that-is-at-least-32-chars")
@@ -69,6 +71,8 @@ def create_app(auth_service: AuthService | None = None, import_repository: Impor
     elif not hasattr(app.state, "opportunity_repository"): app.state.opportunity_repository = InMemoryOpportunityRepository()
     if video_repository is not None: app.state.video_repository = video_repository
     elif not hasattr(app.state, "video_repository"): app.state.video_repository = InMemoryVideoRepository()
+    if connection_repository is not None: app.state.connection_repository = connection_repository
+    elif not hasattr(app.state, "connection_repository"): app.state.connection_repository = InMemoryConnectionRepository()
     if not hasattr(app.state,"planner_repository"): app.state.planner_repository=InMemoryPlannerRepository()
     app.include_router(system_router, prefix="/api/v1", tags=["system"])
     app.include_router(auth_router, prefix="/api/v1", tags=["auth"])

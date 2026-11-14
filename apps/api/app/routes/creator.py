@@ -19,6 +19,7 @@ class CreatorSummary(BaseModel):
     top_media_ids: list[str]
     recurring_formats: dict[str, int]
     observed_hashtags: list[str]
+    observed_caption_keywords: list[str]
     hook_samples: list[str]
     limitations: list[str]
 
@@ -33,7 +34,7 @@ def profile(request: Request, user: dict = Depends(current_user)) -> CreatorSumm
         return CreatorSummary(
             sample_size=0, date_start=None, date_end=None, total_views=0,
             average_engagement_rate=None, top_media_ids=[], recurring_formats={},
-            observed_hashtags=[], hook_samples=[],
+            observed_hashtags=[], observed_caption_keywords=[], hook_samples=[],
             limitations=["No imported creator history is available."],
         )
 
@@ -50,6 +51,13 @@ def profile(request: Request, user: dict = Depends(current_user)) -> CreatorSumm
     hashtags = Counter(
         tag.lower() for item in media
         for tag in re.findall(r"(?<!\w)#([\w]+)", item.get("caption", ""))
+    )
+    ignored_words = {"about", "after", "and", "from", "have", "into", "just", "later", "that", "the", "this", "three", "tips", "with", "your"}
+    keywords = Counter(
+        token.lower()
+        for item in media
+        for token in re.findall(r"\b[a-zA-Z][a-zA-Z0-9]{3,}\b", re.sub(r"(?<!\w)#[\w]+", "", item.get("caption", "")))
+        if token.lower() not in ignored_words
     )
     hooks = [
         item["caption"].strip().splitlines()[0][:160]
@@ -68,5 +76,6 @@ def profile(request: Request, user: dict = Depends(current_user)) -> CreatorSumm
         top_media_ids=[item["media_id"] for item in top],
         recurring_formats=dict(Counter(item["media_type"] for item in media)),
         observed_hashtags=[f"#{tag}" for tag, _ in hashtags.most_common(5)],
+        observed_caption_keywords=[keyword for keyword, _ in keywords.most_common(8)],
         hook_samples=hooks, limitations=limitations,
     )

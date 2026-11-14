@@ -68,7 +68,7 @@ Verdict is **not** a generic caption generator, follower surveillance product, e
 
 ### 3.3 Creator intelligence
 
-- Analyze historical authorized Reels/posts, captions, hashtags, timestamps, and available aggregate Insights.
+- Analyze historical authorized Reels/posts, captions, caption keywords, hashtags, timestamps, and available aggregate Insights.
 - Derive content topics/subtopics, recurring formats, posting patterns, brand voice, hooks, and historically successful content categories.
 - Use deterministic Python statistics for numeric aggregates and Gemini for semantic classification/synthesis.
 - Avoid causal claims from observational correlations. Adjust for sparse data and differing observation windows.

@@ -13,6 +13,7 @@ type Summary = {
   top_media_ids: string[];
   recurring_formats: Record<string, number>;
   observed_hashtags: string[];
+  observed_caption_keywords: string[];
   hook_samples: string[];
   limitations: string[];
 };
@@ -35,6 +36,7 @@ export function CreatorSummary() {
     <p>Derived average engagement rate: {summary.average_engagement_rate ?? "unavailable"}{summary.average_engagement_rate !== null ? "%" : ""}</p>
     <p>Recurring formats: {formats || "none"}</p>
     <p>Observed hashtags: {summary.observed_hashtags.join(", ") || "none"}</p>
+    <p>Observed caption keywords: {summary.observed_caption_keywords.join(", ") || "none"}</p>
     <p>Observed top-caption openings: {summary.hook_samples.join(" | ") || "none"}</p>
     <p>Top media IDs: {summary.top_media_ids.join(", ") || "none"}</p>
     {summary.limitations.map((limit) => <p key={limit} className="error">Limit: {limit}</p>)}

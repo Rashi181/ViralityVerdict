@@ -2,13 +2,13 @@
 
 ## Current checkpoint
 
-- Date: 2026-11-13
-- Branch: `feat/m2-connection-import`
-- Commit: based on M1 checkpoint `609be16`; M2 is uncommitted
-- Milestone: M2 Connection/import
-- Repository state: M2 implementation verified locally; checkpoint commit pending
+- Date: 2026-11-14
+- Branch: `feat/real-instagram-prep`
+- Commit: based on M14 checkpoint `7c50063`; M15 is ready for its approved checkpoint commit
+- Milestone: M15 Read-only Instagram safety foundation
+- Repository state: M15 manually verified and approved; automated regression checks pass
 - Approval status: approved by user after manual verification
-- Commits/pushes by Codex: M0 and M1 pushed on their feature branches
+- Commits/pushes by Codex: M0–M14 checkpointed on their respective feature branches; M15 checkpoint commit pending
 
 ### M0 — Foundation
 
@@ -176,3 +176,15 @@
 - Manual verification: user approved M14 on 2026-11-14.
 - User approval: approved
 - Commit/tag: `eb39602 feat: add hybrid reel evidence sampling`
+
+### M15 — Read-only Instagram safety foundation
+
+- Branch and base commit: `feat/real-instagram-prep`, based on `7c50063`
+- Scope / changed files: permanent Meta read-only policy, encrypted token-vault service, connection/audit repositories, local disconnect/audit APIs, connection safety UI, and deterministic caption-keyword evidence.
+- Dependencies and credentials: `cryptography` 45.0.7 was added for Fernet encryption. No Meta app secret, user password, access token, or live API call was used.
+- Acceptance criteria: `instagram_business_basic` is the sole allowed scope; publishing/comment/message/write scopes and non-GET methods are rejected; encrypted tokens never appear in API audit output; a user can disconnect only their own stored connection; caption keywords are derived from authorized history separately from hashtags.
+- Automated results: pass — `uv lock --project apps/api && pnpm test:api && pnpm lint && pnpm typecheck && pnpm build`; 20 API tests, lint, typecheck, and 14-page production build passed. One existing third-party FastAPI/Starlette TestClient deprecation warning remains.
+- Manual verification: user approved M15 on 2026-11-14.
+- Current blocker: live OAuth state/CSRF callback, remote token revocation, real sync, and deletion choices for future API-synced records must be completed and tested only after the approved Meta configuration exists. OAuth remains disabled.
+- User approval: approved
+- Commit/tag: pending approval

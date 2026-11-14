@@ -23,5 +23,6 @@ def test_creator_summary_deduplicates_owner_media() -> None:
     assert summary["sample_size"] == 1
     assert summary["top_media_ids"] == ["owner-reel-001"]
     assert summary["recurring_formats"] == {"reel": 1}
+    assert "editing" in summary["observed_caption_keywords"]
     assert summary["hook_samples"] == ["Three quick editing tips."]
     assert "Sparse history" in summary["limitations"][1]

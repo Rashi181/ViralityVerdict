@@ -19,6 +19,7 @@ class Settings:
     meta_instagram_login_config_id: str | None = None
     meta_redirect_uri: str | None = None
     meta_api_version: str = "v27.0"
+    meta_token_encryption_key: str | None = None
 
     @classmethod
     def from_environment(cls) -> "Settings":
@@ -37,4 +38,5 @@ class Settings:
             meta_instagram_login_config_id=os.getenv("META_INSTAGRAM_LOGIN_CONFIG_ID") or None,
             meta_redirect_uri=os.getenv("META_REDIRECT_URI") or None,
             meta_api_version=os.getenv("META_API_VERSION") or "v27.0",
+            meta_token_encryption_key=os.getenv("META_TOKEN_ENCRYPTION_KEY") or None,
         )

@@ -148,3 +148,11 @@ The first M1 test run failed during collection because `Protocol` was imported f
 | Web verification | `pnpm lint && pnpm typecheck && pnpm build` | Pass: Reel Readiness UI compiled into the Analyze Reel page; production build generated 14 routes. |
 | Generated Next output cleanup | Removed four stale duplicate `.next/types/* 2.ts` files | Pass: generated artifacts only; source code and user data untouched. |
 | Hybrid frame sampling | `pnpm test:api && pnpm lint && pnpm typecheck && pnpm build` | Pass: FFmpeg samples the first 5 seconds every 0.5 seconds, the remaining body every 3 seconds, and up to 12 detected scene changes; all 19 API tests, lint, typecheck, and the 14-page production build passed. |
+
+## M15 Read-only Instagram safety foundation — 2026-11-14
+
+| Check | Command | Result |
+| --- | --- | --- |
+| Safety policy, encrypted vault, disconnect, and tenant isolation | `pnpm test:api` | Pass: 20 tests. The policy permits only `instagram_business_basic` and GET; a publishing scope and POST method are rejected; Fernet ciphertext differs from the raw token; owner disconnect/audit is isolated and does not expose the raw token. One existing third-party FastAPI/Starlette TestClient deprecation warning remains. |
+| Dependency lock / full web regression | `uv lock --project apps/api && pnpm lint && pnpm typecheck && pnpm build` | Pass: `cryptography` 45.0.7 is locked; lint, typecheck, and 14-page production build passed. |
+| Live Meta OAuth and remote revocation | No credentials or approved Meta app configuration | Skipped, not passed. OAuth remains disabled. |
