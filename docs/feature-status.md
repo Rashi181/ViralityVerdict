@@ -10,7 +10,8 @@ Last audited: 2026-11-13. Source: repository commit `5af463e`.
 | M2 Connection/import | Approved; checkpoint commit pending | Owner-scoped JSON/CSV imports, synthetic demo import, and honest Meta status were manually verified on `feat/m2-connection-import` |
 | M3 Creator intelligence | Approved; checkpointed | Deterministic imported-history summary, evidence IDs, sparse-data limitations, and UI manually verified on `feat/m3-creator-intelligence` |
 | M4 Audience personas | Approved; checkpointed | Owner-scoped aggregate-audience evidence import, observed/provisional persona states, persisted feedback, and onboarding UI manually verified on `feat/m4-audience-personas` |
-| M5–M12 application code | Not started | Planned in the approved implementation plan |
+| M5 Trend intelligence | Approved; checkpointed | Owner-scoped attributed trend observations, freshness labels, and a source-unavailable fallback manually verified on `feat/m5-trend-intelligence` |
+| M6–M12 application code | Not started | Planned in the approved implementation plan |
 | Architecture plan | Approved | `docs/implementation-plan.md` |
 | Product feature coverage | Planned | M0–M12 matrix covers every specified surface; no niche-switch feature included |
 | External integrations | Unverified / blocked pending credentials | See implementation plan and known issues |

@@ -69,3 +69,15 @@
 - Known limitations and recovery: live Meta audience statistics are unavailable pending authorized credentials/scopes. Use the clearly labeled manual aggregate import only for creator-authorized data.
 - User approval: approved
 - Commit/tag (only after approval): `feat: add audience personas`
+
+### M5 — Trend intelligence
+
+- Branch and base commit: `feat/m5-trend-intelligence`, based on `76d2523`
+- Scope / changed files: owner-scoped source-observation persistence/API, freshness evaluation, attributed trend UI, source-unavailable fallback, and tests.
+- Dependencies and credentials: no source credential used. Google Trends API is currently alpha/application-based; M5 only accepts creator-authorized, attributable source observations until an approved provider integration exists.
+- Acceptance criteria: every displayed signal contains source URL, observed/retrieved timestamps, geography/niche relevance, and freshness; no source yields an explicit unavailable state rather than invented trends.
+- Automated results: pass — `uv run --directory apps/api pytest && pnpm lint && pnpm typecheck && pnpm build`; 11 API tests, lint, typecheck, and production build passed. One existing third-party FastAPI/Starlette TestClient deprecation warning remains.
+- Manual verification steps and result: user verified the unavailable fallback and an attributed source observation on 2026-11-13.
+- Known limitations and recovery: no live provider connector is configured. Import a documented, authorized observation with its original source URL; do not treat it as an Instagram performance claim.
+- User approval: approved
+- Commit/tag (only after approval): `feat: add trend intelligence`

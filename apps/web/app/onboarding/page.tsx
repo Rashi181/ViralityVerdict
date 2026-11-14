@@ -4,4 +4,5 @@ import { CsvImportForm } from "../../features/imports/CsvImportForm";
 import { InstagramStatus } from "../../features/imports/InstagramStatus";
 import { CreatorSummary } from "../../features/creator/CreatorSummary";
 import { AudiencePersonaPanel } from "../../features/audience/AudiencePersonaPanel";
-export default function OnboardingPage() { return <main><OnboardingForm /><InstagramStatus /><CsvImportForm /><DemoImportButton /><CreatorSummary /><AudiencePersonaPanel /></main>; }
+import { TrendFeed } from "../../features/trends/TrendFeed";
+export default function OnboardingPage() { return <main><OnboardingForm /><InstagramStatus /><CsvImportForm /><DemoImportButton /><CreatorSummary /><AudiencePersonaPanel /><TrendFeed /></main>; }

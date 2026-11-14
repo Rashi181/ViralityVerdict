@@ -4,6 +4,7 @@
 | --- | --- | --- | --- | --- |
 | KI-M3-01 | Low | Open | Semantic topic/subtopic and brand-voice classification needs an authorized model provider; no provider credential has been supplied. | M3 shows only deterministic imported formats, hashtags, and caption openings and explicitly labels semantic classification unavailable. |
 | KI-M4-01 | Medium | Open | Current Meta audience-insight scopes and account eligibility are unavailable, so Verdict cannot claim API-observed audience statistics. | M4 accepts creator-authorized aggregate imports with field-level provenance and otherwise renders a provisional persona with explicit unknowns. |
+| KI-M5-01 | Medium | Open | No approved live trend-source credential is configured; Google Trends API access is currently alpha/application-based. | M5 displays no trend until the creator imports an attributable, authorized source observation; otherwise it shows an explicit unavailable fallback. |
 | EXT-001 | High | Open | Meta app, OAuth settings, account eligibility, current scopes, and App Review status are unknown | Validate current official documentation and credentials; manual authorized import and labeled demo fixture |
 | EXT-002 | High | Open | No Gemini, Groq, storage, MongoDB, Redis, hosting, or trend-source credentials are in the repository | Do not claim provider results; use adapters and explicit unavailable states |
 | EXT-003 | Medium | Resolved | Local toolchain was previously unconfirmed | Node 24, pnpm 10, Python 3.12, uv, Docker, and Redis were verified during M0 |

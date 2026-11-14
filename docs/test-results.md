@@ -69,3 +69,11 @@ The first M1 test run failed during collection because `Protocol` was imported f
 | Provisional fallback test | Pass: no aggregate audience evidence produces a low-confidence provisional persona with empty observed evidence and explicit unknowns |
 | Evidence, feedback, and owner-isolation test | Pass: authorized aggregate evidence and feedback persist for one owner; a second owner sees no evidence and remains provisional |
 | Full regression | Pass: 9 API tests, lint, typecheck, and production build passed; one existing third-party FastAPI/Starlette TestClient deprecation warning remains |
+
+## M5 Trend intelligence — 2026-11-13
+
+| Check | Result |
+| --- | --- |
+| Source-unavailable fallback | Pass: no source returns an explicit unavailable state with no claimed current trend |
+| Provenance, freshness, and owner isolation | Pass: imported source URL and timestamps persist, freshness is calculated, and another owner cannot read the signal |
+| Full regression | Pass: 11 API tests, lint, typecheck, and production build passed; one existing third-party FastAPI/Starlette TestClient deprecation warning remains |
