@@ -1,0 +1,13 @@
+{
+  "name": "verdict",
+  "private": true,
+  "packageManager": "pnpm@10.13.1",
+  "scripts": {
+    "dev:web": "pnpm --filter @verdict/web dev",
+    "build": "pnpm --filter @verdict/web build",
+    "lint": "pnpm --filter @verdict/web lint",
+    "typecheck": "pnpm --filter @verdict/web typecheck",
+    "test:api": "uv run --directory apps/api pytest",
+    "test": "pnpm typecheck && pnpm test:api"
+  }
+}
