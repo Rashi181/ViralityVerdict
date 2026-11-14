@@ -53,3 +53,11 @@ The first M1 test run failed during collection because `Protocol` was imported f
 | JSON/demo and CSV import tests | Pass: imports are owner-scoped; synthetic imports are labeled; valid CSV is retained as `user_import` |
 | Full regression | Pass: 6 API tests, lint, typecheck, and production build passed; one existing third-party warning remains |
 | Meta OAuth | Skipped: credentials and app configuration are intentionally absent; UI/API report `not_configured` |
+
+## M3 Creator intelligence — 2026-11-13
+
+| Check | Result |
+| --- | --- |
+| Owner-scoped summary test | Pass: imported media produces sample size, deterministic formats/caption openings, derived metrics, evidence IDs, and sparse-data limitations |
+| Duplicate demo regression | Pass: two imports of the same `media_id` count once in Creator Intelligence; source imports remain retained for auditability |
+| Full regression | Pass: 7 API tests, lint, typecheck, and production build passed; one existing third-party FastAPI/Starlette TestClient deprecation warning remains |

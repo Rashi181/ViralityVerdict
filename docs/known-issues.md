@@ -2,6 +2,7 @@
 
 | ID | Severity | Status | Issue / impact | Resolution or honest fallback |
 | --- | --- | --- | --- | --- |
+| KI-M3-01 | Low | Open | Semantic topic/subtopic and brand-voice classification needs an authorized model provider; no provider credential has been supplied. | M3 shows only deterministic imported formats, hashtags, and caption openings and explicitly labels semantic classification unavailable. |
 | EXT-001 | High | Open | Meta app, OAuth settings, account eligibility, current scopes, and App Review status are unknown | Validate current official documentation and credentials; manual authorized import and labeled demo fixture |
 | EXT-002 | High | Open | No Gemini, Groq, storage, MongoDB, Redis, hosting, or trend-source credentials are in the repository | Do not claim provider results; use adapters and explicit unavailable states |
 | EXT-003 | Medium | Resolved | Local toolchain was previously unconfirmed | Node 24, pnpm 10, Python 3.12, uv, Docker, and Redis were verified during M0 |

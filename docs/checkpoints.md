@@ -46,14 +46,14 @@
 - User approval: approved
 - Commit/tag: checkpoint commit pending as `feat: establish M2 connection and import`
 
-### Mx — name
+### M3 — Creator intelligence
 
-- Branch and base commit:
-- Scope / changed files:
-- Dependencies and credentials:
-- Acceptance criteria:
-- Automated results (pass/fail/skip with commands):
-- Manual verification steps and result:
-- Known limitations and recovery:
-- User approval:
-- Commit/tag (only after approval):
+- Branch and base commit: `feat/m3-creator-intelligence`, based on `51921a3`
+- Scope / changed files: owner-scoped imported-history summary, deterministic aggregates, evidence IDs, dates, formats, observed hashtags/caption openings, and UI.
+- Dependencies and credentials: M2 imports; no credential required for deterministic analysis. Semantic model integration is intentionally unavailable.
+- Acceptance criteria: each insight is based on imported records, reports sample/evidence/date context, treats duplicate media IDs once, and does not claim semantic AI analysis without a configured provider.
+- Automated results (pass/fail/skip with commands): pass — `uv run --directory apps/api pytest && pnpm lint && pnpm typecheck && pnpm build`; 7 API tests, lint, typecheck, and production build passed.
+- Manual verification steps and result: user verified the onboarding Creator Intelligence card, including repeated demo-import deduplication, on 2026-11-13.
+- Known limitations and recovery: no authorized Gemini/model provider is configured, so semantic topics and brand voice remain explicitly unavailable; see `docs/known-issues.md`.
+- User approval: approved
+- Commit/tag (only after approval): `feat: add creator intelligence`

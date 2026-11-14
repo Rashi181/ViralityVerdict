@@ -8,6 +8,7 @@ from app.repositories.imports import InMemoryImportRepository, MongoImportReposi
 from app.routes.auth import router as auth_router
 from app.routes.imports import router as imports_router
 from app.routes.instagram import router as instagram_router
+from app.routes.creator import router as creator_router
 from app.routes.system import router as system_router
 from app.services.auth import AuthService
 
@@ -33,6 +34,7 @@ def create_app(auth_service: AuthService | None = None, import_repository: Impor
     app.include_router(auth_router, prefix="/api/v1", tags=["auth"])
     app.include_router(imports_router, prefix="/api/v1", tags=["imports"])
     app.include_router(instagram_router, prefix="/api/v1", tags=["instagram"])
+    app.include_router(creator_router, prefix="/api/v1", tags=["creator"])
     return app
 
 
