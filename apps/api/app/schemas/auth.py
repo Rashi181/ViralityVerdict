@@ -21,7 +21,7 @@ class OnboardingRequest(BaseModel):
     posting_constraints: str = Field(min_length=1, max_length=500)
     preferred_language: str = Field(min_length=2, max_length=20)
     preferred_tone: str = Field(min_length=1, max_length=80)
-    connection_preference: Literal["instagram", "manual_import", "demo"]
+    connection_preference: Literal["instagram", "manual_import"]
 
 
 class OnboardingResponse(OnboardingRequest):

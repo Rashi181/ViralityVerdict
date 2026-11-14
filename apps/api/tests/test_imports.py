@@ -8,10 +8,12 @@ def make_client(repo: InMemoryImportRepository) -> TestClient:
     return TestClient(create_app(AuthService(InMemoryUserRepository(), "test-session-secret-that-is-at-least-32-chars"), repo))
 def signup(client: TestClient, email: str) -> None:
     assert client.post("/api/v1/auth/sign-up", json={"email": email, "password": "correct-horse-battery-staple", "display_name": email}).status_code == 201
-def test_demo_is_labeled_and_private() -> None:
+def test_authorized_import_is_private() -> None:
     repo = InMemoryImportRepository(); a, b = make_client(repo), make_client(repo); signup(a, "a@x.com"); signup(b, "b@x.com")
-    result = a.post("/api/v1/imports/demo"); assert result.status_code == 201 and result.json()["source"] == "synthetic_demo"
+    result = a.post("/api/v1/imports", json={"consent_confirmed": True, "media": [{"media_id": "owner-reel-001", "published_at": "2026-10-27T12:00:00Z", "caption": "Three quick editing tips.", "media_type": "reel", "views": 1840, "likes": 146, "comments": 18}]})
+    assert result.status_code == 201 and result.json()["source"] == "user_import"
     assert b.get("/api/v1/imports").json() == []
+    assert a.post("/api/v1/imports/demo").status_code == 404
 
 def test_csv_import_validates_and_marks_user_import() -> None:
     client = make_client(InMemoryImportRepository()); signup(client, "csv@x.com")

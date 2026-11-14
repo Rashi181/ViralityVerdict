@@ -2,7 +2,7 @@
 
 ## Scope and safety boundary
 
-Verdict currently supports local authenticated use, creator-authorized CSV/JSON imports, a clearly labeled synthetic demo, private local video metadata extraction, planning, and a manual publishing handoff. It does **not** connect to Instagram yet, publish content, edit an Instagram account, or claim live platform metrics.
+Verdict currently supports local authenticated use, creator-authorized CSV/JSON imports, private local video metadata extraction, planning, and a manual publishing handoff. It does **not** connect to Instagram yet, publish content, edit an Instagram account, or claim live platform metrics.
 
 Never put a password, Meta access token, app secret, or database URI in chat, source code, a screenshot, or a commit. Put local values only in the ignored repository-root `.env` file.
 
@@ -25,11 +25,11 @@ Never put a password, Meta access token, app secret, or database URI in chat, so
 
 4. Open `http://localhost:3000`, create an account, and continue to onboarding.
 
-## Repeatable demo path
+## Repeatable authorized-data path
 
 1. In onboarding, confirm that Instagram says it is not configured. This is correct until official OAuth is implemented and configured.
-2. Click **Load synthetic demo**. It creates labeled, non-Instagram fixture data only.
-3. Check **Creator intelligence**. It should show one imported item, an observed/derived summary, and sparse-history limitations.
+2. Import a CSV containing only the account owner's authorized media data.
+3. Check **Creator intelligence**. It should show an observed/derived summary and any sparse-history limitations.
 4. Add only authorized aggregate audience evidence, or leave it blank to see the explicitly provisional persona state.
 5. Upload a small MP4/WebM draft. The displayed duration and dimensions are measured locally by FFmpeg; it must not receive a public link.
 6. Save a plan. Its `scheduled` state means a plan, not an Instagram post.

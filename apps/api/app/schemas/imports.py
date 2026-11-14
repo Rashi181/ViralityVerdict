@@ -27,7 +27,7 @@ class ImportRequest(BaseModel):
 
 class ImportResponse(BaseModel):
     id: str
-    source: Literal["user_import", "synthetic_demo"]
+    source: Literal["user_import"]
     status: Literal["completed"]
     media_count: int
     created_at: datetime

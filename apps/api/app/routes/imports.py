@@ -9,9 +9,6 @@ from app.schemas.imports import ImportedMedia, ImportRequest, ImportResponse
 
 router = APIRouter()
 
-DEMO_MEDIA = [{"media_id": "demo-reel-001", "published_at": "2026-10-27T12:00:00Z", "caption": "Synthetic demo: three quick editing tips.", "media_type": "reel", "views": 1840, "likes": 146, "comments": 18}]
-
-
 def repository(request: Request) -> ImportRepository: return request.app.state.import_repository
 def response(record: dict) -> ImportResponse: return ImportResponse(id=record["_id"], source=record["source"], status=record["status"], media_count=len(record["media"]), created_at=record["created_at"], limitations=record["limitations"])
 
@@ -21,11 +18,6 @@ def create_import(payload: ImportRequest, user: dict = Depends(current_user), re
     limitations = ["User-supplied import; Verdict has not API-verified these metrics."]
     if not payload.consent_confirmed: limitations.append("Creator consent was not confirmed.")
     return response(repo.create(user["_id"], "user_import", [item.model_dump(mode="json") for item in payload.media], limitations))
-
-
-@router.post("/imports/demo", response_model=ImportResponse, status_code=status.HTTP_201_CREATED)
-def create_demo_import(user: dict = Depends(current_user), repo: ImportRepository = Depends(repository)) -> ImportResponse:
-    return response(repo.create(user["_id"], "synthetic_demo", DEMO_MEDIA, ["Synthetic demo data only. It is not creator or Instagram API data."]))
 
 
 @router.get("/imports", response_model=list[ImportResponse])

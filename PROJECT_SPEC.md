@@ -28,7 +28,7 @@ Verdict is **not** a generic caption generator, follower surveillance product, e
 
 1. **Personalization:** Recommendations derive from the creator's own available content, audience, goals, and constraints.
 2. **Evidence:** Separate platform-observed facts, inferred hypotheses, trend sources, and simulations.
-3. **Actionability:** Timestamped Reel feedback, concrete hook alternatives, caption variants, and next-step plans.
+3. **Actionability:** Timestamped Reel feedback, concrete hook alternatives, caption recommendations, and next-step plans.
 4. **Closed loop:** Compare suggestions and experiments with later real performance where data is available.
 5. **Trust:** Explainable scoring, explicit approvals, strong data isolation, and honest handling of missing data.
 
@@ -64,7 +64,7 @@ Verdict is **not** a generic caption generator, follower surveillance product, e
 - Historical performance summaries and content-category comparisons with time windows and denominators.
 - Current audience overview based on accessible aggregate data; data freshness clearly visible.
 - Top content opportunities, latest analyses, saved drafts, experiments, and planned posts.
-- Empty states and demo/sample-data mode must be conspicuously labeled.
+- Empty states must clearly explain which authorized data is needed next; production creator workflows must not include synthetic creator imports.
 
 ### 3.3 Creator intelligence
 
@@ -132,7 +132,7 @@ If audience insights are missing, unavailable, or too sparse: show a `provisiona
 
 - Timestamped, prioritized edit suggestions with severity, rationale, expected *hypothesized* effect, and concrete alternatives.
 - Multiple hook rewrites, CTA options, on-screen text improvements, pacing/structure suggestions, and accessibility checks (captions, readability, contrast where assessable, sound-independent comprehension).
-- Caption generation in **exactly these four selectable styles**: **formal**, **sarcastic**, **humorous-tech**, **humorous-non-tech**. Allow edits and regeneration.
+- Caption Studio generates multiple general caption recommendations relevant to the creator-supplied or evidence-backed Reel context. The creator may add a free-text refinement instruction (for example, a desired tone, length, or phrasing constraint), then edit and regenerate. Do not force fixed tone categories.
 - Hashtag suggestions should distinguish source-backed trends from semantic/relevance suggestions; never assert an unsourced tag is trending.
 - Preserve creator voice and constraints. Support saved versions and before/after comparison.
 
@@ -182,7 +182,7 @@ If audience insights are missing, unavailable, or too sparse: show a `provisiona
 - Allow the creator to upload permitted exports or a documented CSV/JSON schema for their own media/aggregate insights.
 - Validate schema, dates, numeric ranges, duplicate IDs, and ownership/consent; display which fields are missing.
 - Mark imported metrics as `user_import` and retain provenance. Do not label them API-verified.
-- Provide a **clearly labeled synthetic demo dataset** for judging/demo when live Meta access is blocked. Demo data must never appear as a real creator's data.
+- Do not expose synthetic creator data in the product. When live Meta access is blocked, use only creator-authorized manual import and clear empty states.
 
 ### 4.3 Source-of-truth tiers
 
@@ -419,7 +419,7 @@ Create a small, documented evaluation set with labeled demo creator histories, k
 |---|---|---|
 | **M0 — Foundation** | Monorepo, Next.js/FastAPI skeleton, environment templates, MongoDB connectivity, health check, frontend→backend call, tests, CI baseline | App starts locally; API health visible in UI; tests/build pass |
 | **M1 — Auth and isolation** | Login/session, onboarding, user records, owner-scoped services | User A cannot read/write User B data |
-| **M2 — Instagram connection/import** | Official OAuth where available, connection state, sync, validated manual import, labeled demo fixtures | Real authorized data imports or documented permission block + working manual fallback |
+| **M2 — Instagram connection/import** | Official OAuth where available, connection state, sync, validated manual import | Real authorized data imports or documented permission block + working manual fallback |
 | **M3 — Creator intelligence** | Historical aggregates, content classification, creator profile | Evidence-backed insights with dates/sample sizes |
 | **M4 — Audience personas** | Current available aggregate audience ingestion, observed/inferred split, provisional fallback | Personas cite real available stats; no invented demographics |
 | **M5 — Trends** | Authorized source adapters, recency/provenance, graceful fallback | Each claimed trend has real source/timestamp |
@@ -429,7 +429,7 @@ Create a small, documented evaluation set with labeled demo creator histories, k
 | **M9 — Experiments/planner** | A/B versions, hypothesis tracking, content calendar | Data persists and simulated vs observed results are distinct |
 | **M10 — Agent** | Typed tool calls, evidence-aware responses, approval workflow | Agent executes real scoped tools and requires approval for writes |
 | **M11 — Publishing/learning** | Official API publishing if permitted, manual handoff fallback, metrics sync, feedback | No publishing without approval; blocked permissions disclosed |
-| **M12 — Launch readiness** | Deploy, polish UI, accessibility/security checks, demo flow, docs | Demo can be repeated from documented setup and fixtures |
+| **M12 — Launch readiness** | Deploy, polish UI, accessibility/security checks, authorized-import flow, docs | Creator workflow can be repeated from documented setup and authorized test data |
 
 ### Checkpoint protocol
 
@@ -454,7 +454,7 @@ For **each** milestone:
 
 **MVP means a genuinely working vertical slice, not a claim that every roadmap feature is complete.** Prioritize:
 
-1. User enters a working app and connects authorized creator data **or** imports their own structured data. For judge demonstrations, a clearly labeled synthetic sample creator is acceptable.
+1. User enters a working app and connects authorized creator data **or** imports their own structured data.
 2. Dashboard displays historically grounded creator insights and audience personas with observed/inferred distinctions.
 3. User sees niche-relevant opportunities with transparent scores; any trends are source-backed or clearly marked unavailable.
 4. User uploads a real sample Reel, sees actual processing progress, and receives timestamped multimodal feedback.

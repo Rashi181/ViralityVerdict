@@ -153,4 +153,15 @@
 - Manual verification: user approved M12 on 2026-11-14.
 - Known limitations and recovery: read `docs/demo-runbook.md`; deployment and Meta OAuth must remain disabled until their credentials and review are ready.
 - User approval: approved
-- Commit/tag: pending checkpoint commit as `feat: add launch readiness safeguards`
+- Commit/tag: `dfdfe6e feat: add launch readiness safeguards`
+
+### M13 — Guided workspace and Caption & Hashtag Studio
+
+- Branch and base commit: `feat/real-instagram-prep`, based on `dfdfe6e`
+- Scope / changed files: shared modular workspace navigation, focused routes for each product stage, simplified onboarding, Caption & Hashtag Studio API/UI, removal of exposed synthetic imports, pre-import sign-in guidance, compact workspace headings, product-spec update, and regression test update.
+- Dependencies and credentials: existing authenticated optimizer; no model or Instagram credential used. The deterministic fallback uses only creator-provided words and explicitly does not interpret a tone request or claim tags are trending.
+- Acceptance criteria: clear guided page flow; three general caption structures rather than fixed tone variants; optional refinement prompt; hashtag source/explanation shown; only creator-authorized manual imports are exposed; no live/provider result is invented.
+- Automated results: pass — `pnpm test:api && pnpm lint && pnpm typecheck && pnpm build`; 19 API tests, lint, typecheck, and the 14-page production build passed. One existing third-party FastAPI/Starlette TestClient deprecation warning remains.
+- Manual verification: user approved M13 on 2026-11-14.
+- User approval: approved
+- Commit/tag: pending checkpoint commit as `feat: add guided creator workspace`

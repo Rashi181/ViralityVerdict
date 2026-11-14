@@ -8,11 +8,11 @@ M0 Foundation is approved and checkpointed. M1–M12 remain planned only.
 
 Use the specified monorepo: `apps/web` (Next.js App Router + TypeScript), `apps/api` (FastAPI + Pydantic v2), `apps/worker` (RQ worker), and `packages/contracts` (generated OpenAPI client/types). MongoDB holds tenant-owned documents and job state; Redis is queue/cache only; S3-compatible storage holds private uploads. The frontend calls versioned API endpoints through typed domain hooks, never embeds backend rules in visual components. Provider adapters isolate Meta, Gemini, Groq, transcription, OCR, trend, and storage integrations.
 
-This is an approved implementation direction, not a scope change. The short demo path is a full vertical slice through an explicitly labeled local/synthetic creator import, deterministic intelligence/personas/opportunities, private draft upload plus real local extraction, provider-backed or clearly unavailable analysis, four caption styles, and planner persistence. Meta publishing, live trend access, and production deployment remain roadmap features with honest fallbacks when credentials or approval are absent.
+This is an approved implementation direction, not a scope change. The short path is a full vertical slice through a creator-authorized manual import, deterministic intelligence/personas/opportunities, private draft upload plus real local extraction, provider-backed or clearly unavailable analysis, general caption recommendations, and planner persistence. Meta publishing, live trend access, and production deployment remain roadmap features with honest fallbacks when credentials or approval are absent.
 
 ## MVP critical path
 
-`M0 → M1 → M2 manual import/demo fallback → M3 → M4 → M6 → M7 → M8 → M9 → M12 demo`.
+`M0 → M1 → M2 authorized manual import fallback → M3 → M4 → M6 → M7 → M8 → M9 → M12`.
 
 M5 can run in parallel only after source authorization is verified. M10 and M11 stay in scope but are post-demo stretch unless the vertical slice is reliable. No feature is removed or represented as implemented before its acceptance tests pass.
 
@@ -22,7 +22,7 @@ M5 can run in parallel only after source authorization is verified. M10 and M11 
 | --- | --- | --- | --- | --- |
 | M0 Foundation | pnpm workspace; `apps/web`; `apps/api`; `apps/worker`; contracts; environment templates; Docker/local services; health/ready; CI | Node, Python, MongoDB, Redis availability | Web shows a real API health response; no secrets committed | pytest health test; web lint/typecheck/build; API contract smoke test |
 | M1 Auth and isolation | auth/session adapter; onboarding; users; auth dependency; owner-scoped repository base; protected routes | M0; auth provider decision | Two test users cannot read/write each other's objects | API cross-tenant denial tests; session/route E2E |
-| M2 Connection/import | Meta OAuth adapter/status/sync/disconnect; CSRF state; CSV/JSON import validator; demo fixtures | M1; Meta app or manual schema | Authorized import works, or Meta block is disclosed and manual import works; data origin is labeled | import schema/date/range/duplicate tests; OAuth-state mocks; E2E fixture import |
+| M2 Connection/import | Meta OAuth adapter/status/sync/disconnect; CSRF state; CSV/JSON import validator | M1; Meta app or manual schema | Authorized import works, or Meta block is disclosed and manual import works; data origin is labeled | import schema/date/range/duplicate tests; OAuth-state mocks; E2E authorized-import path |
 | M3 Creator intelligence | media/insights repositories; deterministic aggregates; semantic-classification adapter; profile service/dashboard | M2 | Insights name media IDs, denominators, dates, source tiers, and limitations | aggregate and sparse-data unit tests; mocked semantic output validation |
 | M4 Audience personas | audience ingestion; persona schema/service; observed/inferred split; provisional state and UI | M2, M3; accessible aggregate stats | Every persona cites actual aggregate evidence or says provisional; no unsupported cross-tabs | grounding/provenance tests; unavailable-data E2E. **Implemented; awaiting manual verification on `feat/m4-audience-personas`.** |
 | M5 Trends | documented `TrendSource` adapters; freshness rules; attribution store/UI; unavailable/evergreen fallback | M1; approved sources/keys | Every displayed trend has source URL and timestamps; no source means unavailable, not invented | source-parser mocks; stale-source and fallback tests. **Implemented; awaiting manual verification on `feat/m5-trend-intelligence`.** |
@@ -32,7 +32,7 @@ M5 can run in parallel only after source authorization is verified. M10 and M11 
 | M9 Experiments/planner | experiment and plan repositories/routes; calendar/list UI; statuses; before/after versions | M1, M6, M8 | Items persist per owner and simulated/observed results remain distinct | CRUD/authz tests; planner E2E |
 | M10 Agent | typed read tools; server-side scoping; run/audit records; write preview/confirmation endpoints | M1, M3–M9; reasoning provider | Agent invokes real scoped tools; planner writes require confirmation | tool-schema/prompt-injection/authz/approval tests |
 | M11 Publishing/learning | publish eligibility checker; preview/approval/audit; Meta publisher; manual export/handoff; later metric sync | M2; current Meta approval/scopes | No API publish without exact approval; unavailable permissions show manual handoff; observed metrics remain observed | approval/token/error/idempotency tests; mock provider integration |
-| M12 Launch readiness | deployment config; accessibility/security review; fixture demo; runbook; observability | Working M0–M9 slice; approved hosting credentials | Repeatable demo, disclosed fallbacks, and documented setup/verification | production builds; Playwright path; accessibility scan; security regression. **Implemented on `feat/real-instagram-prep`; awaiting manual verification.** |
+| M12 Launch readiness | deployment config; accessibility/security review; authorized-import runbook; observability | Working M0–M9 slice; approved hosting credentials | Repeatable workflow, disclosed fallbacks, and documented setup/verification | production builds; Playwright path; accessibility scan; security regression. **Implemented on `feat/real-instagram-prep`; awaiting manual verification.** |
 
 ## Feature completeness matrix
 
@@ -60,6 +60,12 @@ All product surfaces in the specification are represented: landing/auth (M0–M1
 ## Completion protocol
 
 At each milestone: branch, state scope/files/dependencies/blockers, implement only that milestone, run its tests, record actual outcomes in status/test/checkpoint/issue docs, provide manual steps, then stop for approval. No commit, push, merge, paid provisioning, or external account mutation without explicit approval.
+
+## Post-M12 product evolution
+
+| Milestone | Exact components | Dependencies | Acceptance criteria | Testing |
+| --- | --- | --- | --- | --- |
+| M13 Guided workspace and Caption & Hashtag Studio | Shared modular workspace shell; focused dashboard/connect/insights/ideas/analyze/studio/planner/strategist/publish routes; general caption recommendations; optional creator refinement prompt; source-labeled hashtag suggestions | M1 auth; M8 optimizer; no model credential required for deterministic fallback | A creator can follow a clear page-by-page path; Studio does not force tone categories; suggestions identify their evidence/source and do not claim unsourced tags are trending | API contract test; lint/typecheck/production build; manual navigation and Studio check. **Implemented on `feat/real-instagram-prep`; awaiting manual verification.** |
 
 ## M0 checkpoint: approved
 

@@ -3,7 +3,16 @@
 body { margin: 0; }
 .skip-link { position: fixed; left: 1rem; top: -5rem; z-index: 10; background: #f6f8ff; color: #0b1020; padding: 0.75rem; }
 .skip-link:focus { top: 1rem; }
-main { max-width: 720px; margin: 0 auto; padding: 8rem 1.5rem; }
+main { max-width: 720px; margin: 0 auto; padding: 4rem 1.5rem; }
+.app-shell { min-height: 100vh; display: grid; grid-template-columns: 17rem minmax(0, 1fr); }
+.app-shell main { width: min(100%, 760px); margin: 0; }
+.app-shell h1 { font-size: clamp(2.4rem, 4vw, 3.6rem); }
+.sidebar { border-right: 1px solid #37446c; padding: 2rem 1rem; }
+.sidebar p { color: #c2c9dc; line-height: 1.4; }
+.brand { display: inline-block; color: #f6f8ff; font-size: 1.5rem; font-weight: 800; text-decoration: none; }
+.sidebar nav { display: grid; gap: 0.35rem; margin-top: 2rem; }
+.sidebar nav a { border-radius: 0.4rem; padding: 0.6rem; text-decoration: none; }
+.sidebar nav a:hover { background: #1d294d; }
 h1 { font-size: clamp(2.4rem, 7vw, 4.8rem); line-height: 1; margin: 0.5rem 0 1.5rem; }
 .eyebrow { color: #9fb3ff; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
 .intro { color: #c2c9dc; font-size: 1.15rem; line-height: 1.6; }
@@ -16,3 +25,6 @@ input, select, button { font: inherit; padding: 0.65rem; border-radius: 0.4rem; 
 button { margin-top: 0.75rem; background: #9fb3ff; color: #0b1020; font-weight: 700; cursor: pointer; }
 a { color: #b9c7ff; }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid #f6f8ff; outline-offset: 3px; }
+textarea { font: inherit; min-height: 7rem; padding: 0.65rem; border-radius: 0.4rem; border: 1px solid #52618e; }
+small { color: #c2c9dc; }
+@media (max-width: 760px) { .app-shell { display: block; } .sidebar { border-right: 0; border-bottom: 1px solid #37446c; } .sidebar nav { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

@@ -129,3 +129,13 @@ The first M1 test run failed during collection because `Protocol` was imported f
 | Web lint and typecheck | `pnpm lint && pnpm typecheck` | Pass |
 | Web production build | `pnpm build` | Pass: Next.js 16.4.6 generated `/`, `/sign-in`, `/sign-up`, and `/onboarding`. |
 | Playwright / automated accessibility scan | Not configured | Skipped, not passed. Manual keyboard verification remains required. |
+
+## M13 Guided workspace and Caption & Hashtag Studio — 2026-11-14
+
+| Check | Command | Result |
+| --- | --- | --- |
+| API contract regression | `pnpm test:api` | Pass: 19 tests passed. Caption Studio returns general caption structures and creator-provided-keyword hashtag labels; it does not claim those tags are trending. One existing third-party FastAPI/Starlette TestClient deprecation warning remains. |
+| Web lint and typecheck | `pnpm lint && pnpm typecheck` | Pass |
+| Web production build | `pnpm build` | Pass: Next.js generated the 14 focused routes, including dashboard, connect, insights, ideas, analyze, studio, planner, strategist, and publish. |
+| Synthetic-import removal regression | Pass: `pnpm test:api && pnpm lint && pnpm typecheck && pnpm build` | 19 API tests passed, including a 404 assertion for the removed endpoint; lint, typecheck, and 14-page production build passed. |
+| Final navigation/usability build | `pnpm lint && pnpm typecheck && pnpm build` | Pass: compact workspace headings and pre-import sign-in guidance compiled into the same 14-page production build. |
