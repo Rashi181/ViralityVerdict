@@ -28,7 +28,7 @@ Off the critical path for the hackathon (still full-product scope, tracked as *p
 
 ## 2. Key technical decisions (for approval)
 
-| # | Decision | Proposal | Why / Ponytail Lite note |
+| # | Decision | Proposal | Why |
 |---|---|---|---|
 | D1 | Auth | FastAPI-owned email/password auth (Argon2), server-side sessions in MongoDB, httpOnly cookie. Next.js proxies `/api/*` to FastAPI via rewrites so cookies are same-origin. | No third-party auth account, and the backend stays the authority for tenant scoping. A provider like Clerk or Auth.js can be swapped in later behind `AuthService`. |
 | D2 | DB driver | PyMongo's native async API (`AsyncMongoClient`). Motor is deprecated in favor of it; the version is verified at M0. | One driver. |
@@ -37,7 +37,7 @@ Off the critical path for the hackathon (still full-product scope, tracked as *p
 | D5 | Object storage | `StorageProvider` interface. A `LocalStorageProvider` with HMAC-signed, short-expiry upload and download URLs for dev and the hackathon. An `S3StorageProvider` (presigned) is enabled once a free or approved bucket exists. | Same contract as presigned S3, no spend. |
 | D6 | Transcription | `Transcriber` adapter. Primary: Groq-hosted Whisper large-v3-turbo (verify availability, limits, and free-tier quota). Fallback: local `faster-whisper` small/base on CPU, clearly recorded as the model actually used. | Large-v3 on CPU is too slow for a live demo. |
 | D7 | Multimodal | Gemini Flash-family via `google-genai` SDK. Input: scene-sampled frames **with timestamps** + transcript segments + metadata, requiring structured JSON output validated by Pydantic. Model ID read from env and verified at M7. | Timestamps grounded in our own sampling, so they can be validated against the duration. |
-| D8 | OCR | PaddleOCR **deferred behind a flag** (heavy install). In the MVP, Gemini reads on-screen text from the frames, and the findings are labeled `inferred`. | The spec says "where useful". Marked *deferred*, not removed. |
+| D8 | OCR | PaddleOCR **deferred behind a flag** (heavy install). In the MVP, Gemini reads on-screen text from the frames, and the findings are labeled `inferred`. | The spec says "where useful". Would be marked *deferred*, not removed. **Needs your approval.** |
 | D9 | Reasoning / agent | Groq GPT-OSS via `ReasoningModel` adapter (verify the model ID and tool-calling support at M10). For M3/M4/M6 semantic synthesis, use Gemini or Groq, whichever is verified first. | |
 | D10 | Score fallback | A missing component is set to a **neutral 50**, flagged `missing: true` with a `fallback_reason`, and confidence is downgraded one level per missing component. Formula `scoring_version = "cos-v1"`. Alternative: renormalize weights over the available components. **Needs your choice.** | The spec requires an explicit, documented fallback. |
 | D11 | Trend sources | MVP: `TrendSource` interface + "unavailable" adapter → trend_relevance falls back per D10 and the UI says *trends unavailable*. Stretch (M5b): candidates to verify are the YouTube Data API `videos.list chart=mostPopular` (documented, free quota) and the Google Trends API (alpha/limited access, needs verification). No Instagram scraping. | Honest degradation. |

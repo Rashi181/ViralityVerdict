@@ -23,21 +23,12 @@ At the start of every session:
 - **Excluded:** niche switching, niche pivoting, and a niche-switch simulator. Do not build any of them, even partially.
 - **No scraping** of Instagram or any source that forbids it. Use only official or documented, authorized sources.
 
-## 2. Ponytail Lite: simplification policy (applied conservatively)
+## 2. Scope integrity
 
-Interpretation in use until the user corrects it: *simplify how something is built, never what the product can do.*
-
-Allowed simplifications:
-- Prefer the fewest moving parts that still keep the real behavior. Examples: a local-filesystem storage adapter behind the same `StorageProvider` interface as S3, one FastAPI service plus one RQ worker, server-rendered forms before fancy UI.
-- Defer optional infrastructure (vector search, embeddings, PaddleOCR) behind feature flags when the spec marks it optional or "where useful".
-- Choose boring, well-documented libraries over clever abstractions. No speculative generality: introduce an interface only where the spec requires swappable providers (spec §9.1) or where tests need it.
-
-Not allowed:
-- Removing or quietly narrowing a spec capability. A deferral must be listed as *planned/deferred* in `docs/feature-status.md`.
-- Mocking an external call in production paths and presenting the result as real.
-- Skipping provenance, owner scoping, approvals, or input validation "for speed".
-
-Any proposed deviation from the spec goes to the user for approval first (spec §15.6).
+- Never remove or quietly narrow a spec capability. Any deferral must be approved by the user and listed as *planned/deferred* in `docs/feature-status.md`.
+- Never mock an external call in production paths and present the result as real.
+- Never skip provenance, owner scoping, approvals, or input validation "for speed".
+- Any proposed deviation from the spec goes to the user for approval first (spec §15.6).
 
 ## 3. Repository layout
 
