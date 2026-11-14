@@ -6,7 +6,7 @@
 - Branch: `feat/m0-foundation`
 - Commit: `5af463e`
 - Milestone: M0 Foundation
-- Repository state: M0 implementation verified and committed locally; push pending
+- Repository state: M0 implementation verified, committed, and pushed to `origin/feat/m0-foundation`
 - Approval status: approved by user after manual verification
 - Commits/pushes by Codex: none
 
@@ -20,7 +20,7 @@
 - Manual verification steps and result: servers were started on `127.0.0.1:8000` and `127.0.0.1:3000`; API returned HTTP 200 health JSON and web returned HTTP 200. User manually verified and approved the milestone.
 - Known limitations and recovery: no persistence, auth, database, queue, or credentials are implemented; all belong to later milestones.
 - User approval: approved
-- Commit/tag (only after approval): `feat: establish M0 foundation` (checkpointed; push pending)
+- Commit/tag (only after approval): `feat: establish M0 foundation` (checkpointed and pushed)
 
 ## Milestone checkpoint template
 
