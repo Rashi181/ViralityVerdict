@@ -7,4 +7,5 @@ import { AudiencePersonaPanel } from "../../features/audience/AudiencePersonaPan
 import { TrendFeed } from "../../features/trends/TrendFeed";
 import { OpportunityList } from "../../features/opportunities/OpportunityList";
 import { VideoUpload } from "../../features/videos/VideoUpload";
-export default function OnboardingPage() { return <main><OnboardingForm /><InstagramStatus /><CsvImportForm /><DemoImportButton /><CreatorSummary /><AudiencePersonaPanel /><TrendFeed /><OpportunityList /><VideoUpload /></main>; }
+import { Optimizer } from "../../features/optimization/Optimizer";
+export default function OnboardingPage() { return <main><OnboardingForm /><InstagramStatus /><CsvImportForm /><DemoImportButton /><CreatorSummary /><AudiencePersonaPanel /><TrendFeed /><OpportunityList /><VideoUpload /><Optimizer /></main>; }

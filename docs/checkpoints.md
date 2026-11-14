@@ -102,3 +102,13 @@
 - Limitations: only FFmpeg metadata runs. RQ/Redis workers, scene extraction, transcript, OCR, model analysis, and object storage are not configured; no result is fabricated.
 - User approval: approved
 - Commit/tag: `feat: add private video processing`
+
+### M8 — Optimization
+
+- Branch: `feat/m8-optimization`, based on `dfbcd98`
+- Scope: user-text-grounded local caption variants and safe optimizer UI.
+- Acceptance: exactly four caption styles exist; simulated reactions and timestamped findings are not fabricated without grounding.
+- Automated results: pass — 14 API tests, lint, typecheck, production build.
+- Manual verification: user verified all four caption styles and the safe limitation labels on 2026-11-14.
+- User approval: approved
+- Commit/tag: `feat: add safe reel optimization`

@@ -17,6 +17,7 @@ from app.routes.audience import router as audience_router
 from app.routes.trends import router as trends_router
 from app.routes.opportunities import router as opportunities_router
 from app.routes.videos import router as videos_router
+from app.routes.optimization import router as optimization_router
 from app.routes.system import router as system_router
 from app.services.auth import AuthService
 
@@ -59,6 +60,7 @@ def create_app(auth_service: AuthService | None = None, import_repository: Impor
     app.include_router(trends_router, prefix="/api/v1", tags=["trends"])
     app.include_router(opportunities_router, prefix="/api/v1", tags=["opportunities"])
     app.include_router(videos_router, prefix="/api/v1", tags=["videos"])
+    app.include_router(optimization_router, prefix="/api/v1", tags=["optimization"])
     return app
 
 

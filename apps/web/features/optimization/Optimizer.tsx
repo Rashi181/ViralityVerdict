@@ -1,0 +1,5 @@
+"use client";
+import { useState } from "react";
+import { request } from "../../lib/api";
+type Result={captions:{style:string;text:string}[];suggestions:string[];persona_reactions:string[];limitations:string[]};
+export function Optimizer(){const[result,setResult]=useState<Result>();return <><form className="panel" action={async(data)=>{setResult(await request<Result>("/optimize",{method:"POST",body:JSON.stringify({draft_text:data.get("draft_text"),call_to_action:data.get("cta")})}))}}><h2>Draft Reel optimizer</h2><p>Uses only the text you provide. It is not a video or audience analysis.</p><label>Draft text<textarea name="draft_text" required /></label><label>CTA<input name="cta" required /></label><button type="submit">Create local caption variants</button></form>{result&&<section className="panel"><h2>Optimization guidance</h2>{result.captions.map(c=><article key={c.style}><h3>{c.style}</h3><p>{c.text}</p></article>)}<h3>Suggestions</h3>{result.suggestions.map(x=><p key={x}>{x}</p>)}{result.limitations.map(x=><p className="error" key={x}>Limit: {x}</p>)}</section>}</>}
