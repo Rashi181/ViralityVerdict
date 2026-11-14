@@ -3,12 +3,12 @@
 ## Current checkpoint
 
 - Date: 2026-11-13
-- Branch: `feat/m0-foundation`
-- Commit: `5af463e`
-- Milestone: M0 Foundation
-- Repository state: M0 implementation verified, committed, and pushed to `origin/feat/m0-foundation`
+- Branch: `feat/m1-auth-isolation`
+- Commit: based on M0 checkpoint `67ce73b`; M1 is uncommitted
+- Milestone: M1 Auth and isolation
+- Repository state: M1 implementation verified locally; checkpoint commit pending
 - Approval status: approved by user after manual verification
-- Commits/pushes by Codex: none
+- Commits/pushes by Codex: M0 pushed to `origin/feat/m0-foundation`
 
 ### M0 — Foundation
 
@@ -23,6 +23,18 @@
 - Commit/tag (only after approval): `feat: establish M0 foundation` (checkpointed and pushed)
 
 ## Milestone checkpoint template
+
+### M1 — Auth and isolation
+
+- Branch and base commit: `feat/m1-auth-isolation`, based on `67ce73b`
+- Scope / changed files: FastAPI auth/config/repository/service/schema/routes; Mongo Compose configuration; Next.js auth/onboarding UI; tests; M1 status docs
+- Dependencies and credentials: local MongoDB via Docker Compose and a locally generated `VERDICT_SESSION_SECRET`; no external credentials used
+- Acceptance criteria: sign-up/sign-in/sign-out and onboarding work; User B cannot read User A or their onboarding data
+- Automated results: API tests passed (4); web lint, typecheck, and production build passed
+- Manual verification steps and result: user completed the documented local setup and verified the sign-up flow
+- Known limitations and recovery: start Docker Desktop then use the documented local environment values; no cloud/production auth provider is configured
+- User approval: approved
+- Commit/tag (only after approval): checkpoint commit pending as `feat: establish M1 auth and isolation`
 
 ### Mx — name
 

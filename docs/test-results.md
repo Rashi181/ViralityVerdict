@@ -33,3 +33,15 @@ Initial failures corrected during M0: pytest was launched from the repository ro
 | Full M0 regression | `pnpm lint && pnpm test && pnpm build` | Pass: lint, TypeScript typecheck, 2 API tests, and Next.js production build all passed. The same third-party FastAPI/Starlette deprecation warning remains. |
 | Secret-pattern review | `rg -n -i '(api[_-]?key|secret|token|password|private[_-]?key)' ...` | Pass: only empty `.env.example` placeholders and documentation/governance references found. |
 | User manual verification | User-confirmed | Pass: M0 approved. |
+
+## M1 Auth and isolation — 2026-11-13
+
+| Check | Command | Result |
+| --- | --- | --- |
+| API tests | `uv run --directory apps/api pytest` | Pass: 4 tests passed, including sign-out and cross-user read/onboarding denial. One existing third-party warning remains. |
+| Web lint/typecheck/build | `pnpm lint && pnpm typecheck && pnpm build` | Pass: all passed; pages `/sign-up`, `/sign-in`, and `/onboarding` built successfully. |
+| Local MongoDB integration | `docker compose up -d mongodb && docker compose ps` | Blocked: Docker daemon was not running; no database container was created. |
+
+The first M1 test run failed during collection because `Protocol` was imported from `collections.abc`; it was corrected to `typing.Protocol`. The rerun passed.
+
+| Sign-up configuration/feedback regression | `uv sync --project apps/api --group dev && uv run --directory apps/api pytest && pnpm lint && pnpm typecheck && pnpm build` | Pass: local `.env` loading, localhost CORS support, and visible submit/error feedback added; 4 API tests and all web checks passed. |

@@ -64,3 +64,7 @@ At each milestone: branch, state scope/files/dependencies/blockers, implement on
 ## M0 checkpoint: approved
 
 Scope: credential-free monorepo foundation, versioned API health/readiness endpoints, modular web health panel, environment placeholders, API smoke tests, and CI baseline. MongoDB and Redis are not initialized in M0: the service exposes liveness/readiness only, while M1+ introduce dependencies through tested adapters. The user manually verified the milestone; regression checks pass.
+
+## Active milestone: M1
+
+Scope: MongoDB user repository, Argon2 password hashing, signed HttpOnly sessions, sign-up/sign-in/sign-out/current-user APIs, owner-scoped onboarding, route-level UI flows, and cross-user denial tests. M1 does not use an external authentication provider or cloud credentials. The local MongoDB verification path is `compose.yaml`; the Docker daemon must be running. Acceptance requires User B to receive 403 when requesting User A and to receive no User A onboarding record.
