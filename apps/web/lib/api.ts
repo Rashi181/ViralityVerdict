@@ -22,7 +22,7 @@ export async function request<T>(path: string, options: RequestInit = {}): Promi
   const response = await fetch(`${apiBaseUrl}${path}`, {
     ...options,
     credentials: "include",
-    headers: { "Content-Type": "application/json", ...options.headers },
+    headers: { ...(options.body instanceof FormData ? {} : { "Content-Type": "application/json" }), ...options.headers },
   });
   if (!response.ok) {
     const body = await response.json().catch(() => ({ detail: "Request failed" }));

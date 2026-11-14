@@ -12,10 +12,12 @@ class Settings:
     mongodb_uri: str | None
     session_secret: str | None
     session_hours: int = 24
+    meta_app_id: str | None = None
 
     @classmethod
     def from_environment(cls) -> "Settings":
         return cls(
             mongodb_uri=os.getenv("MONGODB_URI") or None,
             session_secret=os.getenv("VERDICT_SESSION_SECRET") or None,
+            meta_app_id=os.getenv("META_APP_ID") or None,
         )

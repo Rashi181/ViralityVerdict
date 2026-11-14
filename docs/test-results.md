@@ -45,3 +45,11 @@ Initial failures corrected during M0: pytest was launched from the repository ro
 The first M1 test run failed during collection because `Protocol` was imported from `collections.abc`; it was corrected to `typing.Protocol`. The rerun passed.
 
 | Sign-up configuration/feedback regression | `uv sync --project apps/api --group dev && uv run --directory apps/api pytest && pnpm lint && pnpm typecheck && pnpm build` | Pass: local `.env` loading, localhost CORS support, and visible submit/error feedback added; 4 API tests and all web checks passed. |
+
+## M2 Connection/import — 2026-11-13
+
+| Check | Result |
+| --- | --- |
+| JSON/demo and CSV import tests | Pass: imports are owner-scoped; synthetic imports are labeled; valid CSV is retained as `user_import` |
+| Full regression | Pass: 6 API tests, lint, typecheck, and production build passed; one existing third-party warning remains |
+| Meta OAuth | Skipped: credentials and app configuration are intentionally absent; UI/API report `not_configured` |

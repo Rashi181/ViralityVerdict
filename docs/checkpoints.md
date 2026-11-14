@@ -3,12 +3,12 @@
 ## Current checkpoint
 
 - Date: 2026-11-13
-- Branch: `feat/m1-auth-isolation`
-- Commit: based on M0 checkpoint `67ce73b`; M1 is uncommitted
-- Milestone: M1 Auth and isolation
-- Repository state: M1 implementation verified locally; checkpoint commit pending
+- Branch: `feat/m2-connection-import`
+- Commit: based on M1 checkpoint `609be16`; M2 is uncommitted
+- Milestone: M2 Connection/import
+- Repository state: M2 implementation verified locally; checkpoint commit pending
 - Approval status: approved by user after manual verification
-- Commits/pushes by Codex: M0 pushed to `origin/feat/m0-foundation`
+- Commits/pushes by Codex: M0 and M1 pushed on their feature branches
 
 ### M0 — Foundation
 
@@ -35,6 +35,16 @@
 - Known limitations and recovery: start Docker Desktop then use the documented local environment values; no cloud/production auth provider is configured
 - User approval: approved
 - Commit/tag (only after approval): checkpoint commit pending as `feat: establish M1 auth and isolation`
+
+### M2 — Connection/import
+
+- Branch and base commit: `feat/m2-connection-import`, based on `609be16`
+- Scope: user-authorized JSON/CSV import, demo fixture, import ownership, and Meta status
+- Acceptance: imports validate/persist under the user, synthetic data is labeled, and unavailable Meta credentials are disclosed
+- Automated results: 6 API tests; web lint/typecheck/production build passed
+- Manual verification: user-approved
+- User approval: approved
+- Commit/tag: checkpoint commit pending as `feat: establish M2 connection and import`
 
 ### Mx — name
 
