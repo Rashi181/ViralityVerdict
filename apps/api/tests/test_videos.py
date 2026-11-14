@@ -20,9 +20,15 @@ def test_private_video_upload_extracts_real_metadata() -> None:
     client.post("/api/v1/auth/sign-up", json={"email": "creator@example.com", "password": "correct-horse-battery-staple", "display_name": "Creator"})
     with TemporaryDirectory() as directory:
         path = Path(directory) / "sample.mp4"
-        subprocess.run(["ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=black:s=320x240:d=1", "-pix_fmt", "yuv420p", str(path)], check=True, capture_output=True)
+        subprocess.run(["ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=black:s=320x240:d=6", "-pix_fmt", "yuv420p", str(path)], check=True, capture_output=True)
         response = client.post("/api/v1/videos", files={"file": ("sample.mp4", path.read_bytes(), "video/mp4")})
     assert response.status_code == 201
     job = response.json()
     assert job["status"] == "completed"
-    assert job["width"] == 320 and job["height"] == 240 and job["duration_seconds"] == 1.0
+    assert job["width"] == 320 and job["height"] == 240 and job["duration_seconds"] == 6.0
+    analysis = client.get(f"/api/v1/videos/{job['id']}/analysis")
+    assert analysis.status_code == 200
+    assert analysis.json()["status"] == "awaiting_ai_analysis"
+    assert analysis.json()["score"] is None
+    assert analysis.json()["attention_risks"] == []
+    assert analysis.json()["evidence"][1]["sampled_frame_count"] >= 1

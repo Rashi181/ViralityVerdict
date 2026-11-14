@@ -165,3 +165,14 @@
 - Manual verification: user approved M13 on 2026-11-14.
 - User approval: approved
 - Commit/tag: `ae5ec86 feat: add guided creator workspace`
+
+### M14 — Reel-analysis foundation
+
+- Branch and base commit: `feat/real-instagram-prep`, based on `e9cb2d2`
+- Scope / changed files: owner-scoped private hybrid frame sampling after upload (dense opening, regular body, scene changes), analysis-evidence schema/endpoint, Reel Readiness UI, and regression coverage.
+- Dependencies and credentials: existing private local upload and FFmpeg. No Gemini, transcript/OCR provider, audience persona evidence, storage, or background worker credential is used.
+- Acceptance criteria: completed private uploads return measured duration/resolution, hybrid sampling strategy, and private sampled-frame count only; analysis returns an explicit pending state with no score, attention-risk claim, or persona reaction until supported inputs/providers exist.
+- Automated results: pass — `pnpm test:api && pnpm lint && pnpm typecheck && pnpm build`; 19 API tests, lint, typecheck, and 14-page production build passed. One existing third-party FastAPI/Starlette TestClient deprecation warning remains.
+- Manual verification: user approved M14 on 2026-11-14.
+- User approval: approved
+- Commit/tag: pending checkpoint commit as `feat: add hybrid reel evidence sampling`

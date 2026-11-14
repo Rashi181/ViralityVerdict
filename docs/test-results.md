@@ -139,3 +139,12 @@ The first M1 test run failed during collection because `Protocol` was imported f
 | Web production build | `pnpm build` | Pass: Next.js generated the 14 focused routes, including dashboard, connect, insights, ideas, analyze, studio, planner, strategist, and publish. |
 | Synthetic-import removal regression | Pass: `pnpm test:api && pnpm lint && pnpm typecheck && pnpm build` | 19 API tests passed, including a 404 assertion for the removed endpoint; lint, typecheck, and 14-page production build passed. |
 | Final navigation/usability build | `pnpm lint && pnpm typecheck && pnpm build` | Pass: compact workspace headings and pre-import sign-in guidance compiled into the same 14-page production build. |
+
+## M14 Reel-analysis foundation — 2026-11-14
+
+| Check | Command | Result |
+| --- | --- | --- |
+| Private video evidence / analysis contract | `pnpm test:api` | Pass: 19 tests. A real generated MP4 produced measured metadata and an owner-scoped `awaiting_ai_analysis` response with no score or fabricated attention/persona result. One existing third-party FastAPI/Starlette TestClient deprecation warning remains. |
+| Web verification | `pnpm lint && pnpm typecheck && pnpm build` | Pass: Reel Readiness UI compiled into the Analyze Reel page; production build generated 14 routes. |
+| Generated Next output cleanup | Removed four stale duplicate `.next/types/* 2.ts` files | Pass: generated artifacts only; source code and user data untouched. |
+| Hybrid frame sampling | `pnpm test:api && pnpm lint && pnpm typecheck && pnpm build` | Pass: FFmpeg samples the first 5 seconds every 0.5 seconds, the remaining body every 3 seconds, and up to 12 detected scene changes; all 19 API tests, lint, typecheck, and the 14-page production build passed. |

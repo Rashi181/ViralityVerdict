@@ -66,6 +66,7 @@ At each milestone: branch, state scope/files/dependencies/blockers, implement on
 | Milestone | Exact components | Dependencies | Acceptance criteria | Testing |
 | --- | --- | --- | --- | --- |
 | M13 Guided workspace and Caption & Hashtag Studio | Shared modular workspace shell; focused dashboard/connect/insights/ideas/analyze/studio/planner/strategist/publish routes; general caption recommendations; optional creator refinement prompt; source-labeled hashtag suggestions | M1 auth; M8 optimizer; no model credential required for deterministic fallback | A creator can follow a clear page-by-page path; Studio does not force tone categories; suggestions identify their evidence/source and do not claim unsourced tags are trending | API contract test; lint/typecheck/production build; manual navigation and Studio check. **Implemented on `feat/real-instagram-prep`; awaiting manual verification.** |
+| M14 Reel-analysis foundation | Private FFmpeg hybrid frame sampling (dense opening, regular body, scene-change frames); owner-scoped analysis endpoint; Reel Readiness UI; explicit unavailable/pending analysis states | M7 private upload; FFmpeg; no provider credential required for extraction | A completed private video exposes only measured metadata/frame-sampling evidence; no readiness score, attention risk, or persona reaction is fabricated without Gemini/transcript/OCR/persona inputs | Private upload/analysis API test; lint/typecheck/production build. **Implemented on `feat/real-instagram-prep`; awaiting manual verification.** |
 
 ## M0 checkpoint: approved
 
