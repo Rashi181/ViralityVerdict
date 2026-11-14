@@ -113,3 +113,10 @@ The first M1 test run failed during collection because `Protocol` was imported f
 | --- | --- |
 | Scoped read-tool contract | Pass: authenticated user receives their own tool counts and an explicit no-model-result limitation |
 | Full regression | Pass: 16 API tests, lint, typecheck, and production build passed |
+
+## M11 Publishing — 2026-11-14
+
+| Check | Result |
+| --- | --- |
+| Manual-handoff safety | Pass: no Meta config returns ineligible/manual-handoff status and explicitly says nothing was published |
+| Full regression | Pass: 17 API tests, lint, typecheck, and production build passed |

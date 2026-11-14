@@ -10,4 +10,5 @@ import { VideoUpload } from "../../features/videos/VideoUpload";
 import { Optimizer } from "../../features/optimization/Optimizer";
 import { Planner } from "../../features/planner/Planner";
 import { Strategist } from "../../features/strategist/Strategist";
-export default function OnboardingPage() { return <main><OnboardingForm /><InstagramStatus /><CsvImportForm /><DemoImportButton /><CreatorSummary /><AudiencePersonaPanel /><TrendFeed /><OpportunityList /><VideoUpload /><Optimizer /><Planner /><Strategist /></main>; }
+import { PublishingEligibility } from "../../features/publishing/PublishingEligibility";
+export default function OnboardingPage() { return <main><OnboardingForm /><InstagramStatus /><CsvImportForm /><DemoImportButton /><CreatorSummary /><AudiencePersonaPanel /><TrendFeed /><OpportunityList /><VideoUpload /><Optimizer /><Planner /><Strategist /><PublishingEligibility /></main>; }

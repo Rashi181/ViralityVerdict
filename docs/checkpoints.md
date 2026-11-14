@@ -132,3 +132,13 @@
 - Manual verification: user verified authenticated read-tool counts and provider-unavailable disclosure on 2026-11-14.
 - User approval: approved
 - Commit/tag: `feat: add scoped strategist tools`
+
+### M11 — Publishing
+
+- Branch: `feat/m11-publishing-learning`, based on `d977e83`
+- Scope: publishing eligibility gate and manual handoff.
+- Acceptance: no API publishing claim without verified Meta status; creator approval/manual steps are explicit.
+- Automated results: pass — 17 API tests, lint, typecheck, production build.
+- Manual verification: user verified manual-handoff-required status and the no-publish disclosure on 2026-11-14.
+- User approval: approved
+- Commit/tag: `feat: add publishing eligibility gate`
