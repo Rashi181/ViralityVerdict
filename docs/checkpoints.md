@@ -164,4 +164,4 @@
 - Automated results: pass — `pnpm test:api && pnpm lint && pnpm typecheck && pnpm build`; 19 API tests, lint, typecheck, and the 14-page production build passed. One existing third-party FastAPI/Starlette TestClient deprecation warning remains.
 - Manual verification: user approved M13 on 2026-11-14.
 - User approval: approved
-- Commit/tag: pending checkpoint commit as `feat: add guided creator workspace`
+- Commit/tag: `ae5ec86 feat: add guided creator workspace`
