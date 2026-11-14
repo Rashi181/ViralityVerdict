@@ -122,3 +122,13 @@
 - Manual verification: user verified saving a scheduled planner item and the non-publishing status disclosure on 2026-11-14.
 - User approval: approved
 - Commit/tag: `feat: add content planner`
+
+### M10 — Strategist
+
+- Branch: `feat/m10-strategist`, based on `fa687bb`
+- Scope: authenticated read-tool inventory and provider-unavailable strategist state.
+- Acceptance: tools return only authenticated user data; no model/tool-use response or planner write is falsely claimed.
+- Automated results: pass — 16 API tests, lint, typecheck, production build.
+- Manual verification: user verified authenticated read-tool counts and provider-unavailable disclosure on 2026-11-14.
+- User approval: approved
+- Commit/tag: `feat: add scoped strategist tools`

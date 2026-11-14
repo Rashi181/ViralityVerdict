@@ -15,7 +15,8 @@ Last audited: 2026-11-13. Source: repository commit `5af463e`.
 | M7 Video processing | Approved; checkpointed | Private local upload, signature/size validation, owner-scoped persisted jobs, real FFmpeg metadata extraction, and honest limitations manually verified on `feat/m7-video-processing` |
 | M8 Optimization | Approved; checkpointed | User-text-grounded local caption variants, explicit safe limitations, and optimizer UI manually verified on `feat/m8-optimization` |
 | M9 Planner | Approved; checkpointed | Owner-scoped plan persistence, explicit planning statuses, and planner UI manually verified on `feat/m9-planner-experiments` |
-| M10–M12 application code | Not started | Planned in the approved implementation plan |
+| M10 Strategist | Approved; checkpointed | Authenticated read-tool inventory and explicit provider-unavailable state manually verified on `feat/m10-strategist` |
+| M11–M12 application code | Not started | Planned in the approved implementation plan |
 | Architecture plan | Approved | `docs/implementation-plan.md` |
 | Product feature coverage | Planned | M0–M12 matrix covers every specified surface; no niche-switch feature included |
 | External integrations | Unverified / blocked pending credentials | See implementation plan and known issues |

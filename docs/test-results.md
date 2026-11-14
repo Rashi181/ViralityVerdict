@@ -106,3 +106,10 @@ The first M1 test run failed during collection because `Protocol` was imported f
 | --- | --- |
 | Owner-scoped planning | Pass: one owner can save/list a scheduled plan while a second owner sees no items |
 | Full regression | Pass: 15 API tests, lint, typecheck, and production build passed |
+
+## M10 Strategist — 2026-11-14
+
+| Check | Result |
+| --- | --- |
+| Scoped read-tool contract | Pass: authenticated user receives their own tool counts and an explicit no-model-result limitation |
+| Full regression | Pass: 16 API tests, lint, typecheck, and production build passed |

@@ -20,6 +20,7 @@ from app.routes.opportunities import router as opportunities_router
 from app.routes.videos import router as videos_router
 from app.routes.optimization import router as optimization_router
 from app.routes.planner import router as planner_router
+from app.routes.strategist import router as strategist_router
 from app.routes.system import router as system_router
 from app.services.auth import AuthService
 
@@ -66,6 +67,7 @@ def create_app(auth_service: AuthService | None = None, import_repository: Impor
     app.include_router(videos_router, prefix="/api/v1", tags=["videos"])
     app.include_router(optimization_router, prefix="/api/v1", tags=["optimization"])
     app.include_router(planner_router,prefix="/api/v1",tags=["planner"])
+    app.include_router(strategist_router,prefix="/api/v1",tags=["strategist"])
     return app
 
 

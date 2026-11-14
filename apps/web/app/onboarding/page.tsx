@@ -9,4 +9,5 @@ import { OpportunityList } from "../../features/opportunities/OpportunityList";
 import { VideoUpload } from "../../features/videos/VideoUpload";
 import { Optimizer } from "../../features/optimization/Optimizer";
 import { Planner } from "../../features/planner/Planner";
-export default function OnboardingPage() { return <main><OnboardingForm /><InstagramStatus /><CsvImportForm /><DemoImportButton /><CreatorSummary /><AudiencePersonaPanel /><TrendFeed /><OpportunityList /><VideoUpload /><Optimizer /><Planner /></main>; }
+import { Strategist } from "../../features/strategist/Strategist";
+export default function OnboardingPage() { return <main><OnboardingForm /><InstagramStatus /><CsvImportForm /><DemoImportButton /><CreatorSummary /><AudiencePersonaPanel /><TrendFeed /><OpportunityList /><VideoUpload /><Optimizer /><Planner /><Strategist /></main>; }
