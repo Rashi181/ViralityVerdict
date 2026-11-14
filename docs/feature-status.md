@@ -1,6 +1,6 @@
 # Feature status
 
-Last audited: 2026-11-14. Source: repository commit `ae5ec86`.
+Last audited: 2026-11-14. Source: repository commit `eb39602`.
 
 | Area | Status | Evidence / next gate |
 | --- | --- | --- |
@@ -19,7 +19,7 @@ Last audited: 2026-11-14. Source: repository commit `ae5ec86`.
 | M11 Publishing | Approved; checkpointed | Eligibility gate, explicit manual handoff, and no-publish disclosure manually verified on `feat/m11-publishing-learning` |
 | M12 Launch readiness | Approved; checkpointed | Security headers, production cookie/origin configuration, accessibility baseline, repeatable demo runbook, and security regression tests manually approved and committed on `feat/real-instagram-prep` |
 | M13 Guided workspace and Caption & Hashtag Studio | Approved; checkpointed | Focused product pages, shared navigation shell, general caption options, free-text refinement prompt, source-labeled deterministic hashtag suggestions, and no exposed synthetic imports on `feat/real-instagram-prep` |
-| M14 Reel-analysis foundation | Approved; checkpoint pending | Private hybrid FFmpeg frame sampling, owner-scoped evidence endpoint, and Reel Readiness UI with honest AI-analysis-pending state on `feat/real-instagram-prep` |
+| M14 Reel-analysis foundation | Approved; checkpointed | Private hybrid FFmpeg frame sampling, owner-scoped evidence endpoint, and Reel Readiness UI with honest AI-analysis-pending state on `feat/real-instagram-prep` |
 | Architecture plan | Approved | `docs/implementation-plan.md` |
 | Product feature coverage | Planned | M0–M12 matrix covers every specified surface; no niche-switch feature included |
 | External integrations | Unverified / blocked pending credentials | See implementation plan and known issues |
