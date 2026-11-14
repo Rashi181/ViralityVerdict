@@ -9,7 +9,8 @@ Last audited: 2026-11-13. Source: repository commit `5af463e`.
 | M1 Auth and isolation | Approved; checkpoint commit pending | Password/session APIs, MongoDB repository, onboarding UI, and cross-user authorization tests were manually verified on `feat/m1-auth-isolation` |
 | M2 Connection/import | Approved; checkpoint commit pending | Owner-scoped JSON/CSV imports, synthetic demo import, and honest Meta status were manually verified on `feat/m2-connection-import` |
 | M3 Creator intelligence | Approved; checkpointed | Deterministic imported-history summary, evidence IDs, sparse-data limitations, and UI manually verified on `feat/m3-creator-intelligence` |
-| M4–M12 application code | Not started | Planned in the approved implementation plan |
+| M4 Audience personas | Approved; checkpointed | Owner-scoped aggregate-audience evidence import, observed/provisional persona states, persisted feedback, and onboarding UI manually verified on `feat/m4-audience-personas` |
+| M5–M12 application code | Not started | Planned in the approved implementation plan |
 | Architecture plan | Approved | `docs/implementation-plan.md` |
 | Product feature coverage | Planned | M0–M12 matrix covers every specified surface; no niche-switch feature included |
 | External integrations | Unverified / blocked pending credentials | See implementation plan and known issues |

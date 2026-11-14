@@ -61,3 +61,11 @@ The first M1 test run failed during collection because `Protocol` was imported f
 | Owner-scoped summary test | Pass: imported media produces sample size, deterministic formats/caption openings, derived metrics, evidence IDs, and sparse-data limitations |
 | Duplicate demo regression | Pass: two imports of the same `media_id` count once in Creator Intelligence; source imports remain retained for auditability |
 | Full regression | Pass: 7 API tests, lint, typecheck, and production build passed; one existing third-party FastAPI/Starlette TestClient deprecation warning remains |
+
+## M4 Audience personas — 2026-11-13
+
+| Check | Result |
+| --- | --- |
+| Provisional fallback test | Pass: no aggregate audience evidence produces a low-confidence provisional persona with empty observed evidence and explicit unknowns |
+| Evidence, feedback, and owner-isolation test | Pass: authorized aggregate evidence and feedback persist for one owner; a second owner sees no evidence and remains provisional |
+| Full regression | Pass: 9 API tests, lint, typecheck, and production build passed; one existing third-party FastAPI/Starlette TestClient deprecation warning remains |

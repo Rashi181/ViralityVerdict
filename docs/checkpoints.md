@@ -57,3 +57,15 @@
 - Known limitations and recovery: no authorized Gemini/model provider is configured, so semantic topics and brand voice remain explicitly unavailable; see `docs/known-issues.md`.
 - User approval: approved
 - Commit/tag (only after approval): `feat: add creator intelligence`
+
+### M4 — Audience personas
+
+- Branch and base commit: `feat/m4-audience-personas`, based on `1d4f5b5`
+- Scope / changed files: owner-scoped aggregate audience evidence repository/API, observed and provisional persona service, persisted user feedback, onboarding UI, and API tests.
+- Dependencies and credentials: M1 authentication and M2/M3 creator-history context. No credential is needed for manual authorized aggregate imports; Meta audience-insight permissions remain unavailable.
+- Acceptance criteria: personas expose only field-level imported aggregate evidence with source/as-of time; no evidence produces a visibly provisional persona; no demographic-to-content-performance cross-tab claim is made; feedback is owner-scoped and persisted.
+- Automated results (pass/fail/skip with commands): pass — `uv run --directory apps/api pytest && pnpm lint && pnpm typecheck && pnpm build`; 9 API tests, lint, typecheck, and production build passed. One existing third-party FastAPI/Starlette TestClient deprecation warning remains.
+- Manual verification steps and result: user verified the observed aggregate-evidence persona, provenance labels, explicit unknowns, and persisted feedback on 2026-11-13.
+- Known limitations and recovery: live Meta audience statistics are unavailable pending authorized credentials/scopes. Use the clearly labeled manual aggregate import only for creator-authorized data.
+- User approval: approved
+- Commit/tag (only after approval): `feat: add audience personas`
