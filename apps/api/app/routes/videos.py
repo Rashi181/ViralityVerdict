@@ -71,8 +71,7 @@ def reel_readiness(video_id: str, user: dict = Depends(current_user), repo: Vide
     ]
     saved = video.get("gemini_analysis")
     if saved:
-        provider = saved.get("provider", "model")
-        return ReelReadinessResponse(status="ready", score=None, label=f"{provider.title()} analysis ready", evidence=evidence, findings=[ReelFinding.model_validate(item) for item in saved["findings"]], attention_risks=[], persona_reactions=[], cumulative_recommendation=saved["summary"], limitations=saved["limitations"] + [f"Timestamped findings are {provider} hypotheses based on this private draft, not actual viewer-retention data.", "No persona reactions are shown unless Verdict has current, authorized aggregate audience evidence."])
+        return ReelReadinessResponse(status="ready", score=None, label="Analysis ready", evidence=evidence, findings=[ReelFinding.model_validate(item) for item in saved["findings"]], attention_risks=[], persona_reactions=[], cumulative_recommendation=saved["summary"], limitations=saved["limitations"] + ["Timestamped findings are strategic hypotheses based on this private draft, not actual viewer-retention data.", "No persona reactions are shown unless Verdict has current, authorized aggregate audience evidence."])
     return ReelReadinessResponse(status="awaiting_ai_analysis", score=None, label="Ready for strategic analysis", evidence=evidence, findings=[], attention_risks=[], persona_reactions=[], cumulative_recommendation="Your private upload is ready. Select Analyze strategic frames to request evidence-limited hook, scene-change, pacing, clarity, CTA, and accessibility feedback.", limitations=["No provider is called until you explicitly select Analyze strategic frames.", "No Reel Readiness score, retention curve, or persona reaction is shown before evidence-grounded analysis exists."])
 
 

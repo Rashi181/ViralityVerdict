@@ -65,6 +65,8 @@ def test_private_video_analysis_is_explicit_owner_scoped_and_persists_structured
     result = client.post(f"/api/v1/videos/{job['id']}/analysis")
     assert result.status_code == 200
     assert result.json()["status"] == "ready"
+    assert result.json()["label"] == "Analysis ready"
+    assert "provider" not in result.json()["label"].lower()
     assert result.json()["findings"][0]["timestamp_seconds"] == 1.0
     assert result.json()["persona_reactions"] == []
     assert analyzer.calls == 1

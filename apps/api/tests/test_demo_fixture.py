@@ -63,6 +63,9 @@ def test_demo_fixture_uses_raw_facts_only_and_is_owner_scoped(tmp_path) -> None:
     serialized = json.dumps({"creator": creator, "persona": persona})
     assert creator["data_source"] == "synthetic_demo"
     assert persona["status"] == "synthetic_demo"
+    assert len(persona["personas"]) == 1
+    assert persona["personas"][0]["label"] == "Workflow + Data learner · 25-34"
+    assert "Aggregate age band 25-34: 60%" in persona["personas"][0]["observed_evidence"][0]
     assert "datatips" in serialized.lower()
     assert "Forbidden Persona" not in serialized
     assert "Forbidden niche" not in serialized

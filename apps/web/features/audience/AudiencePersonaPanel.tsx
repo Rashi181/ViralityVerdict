@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { request } from "../../lib/api";
 
 type Evidence = { field: string; values: Record<string, string | number>; source: string; source_label: string; as_of: string };
-type Persona = { status: "observed" | "provisional" | "synthetic_demo"; observed_evidence: Evidence[]; inferred_interests: string[]; likely_motivations: string[]; content_preferences: string[]; suggested_hooks: string[]; confidence: string; freshness: string | null };
+type PlanningPersona = { id: string; label: string; strategic_use: string; observed_evidence: string[]; inferred_interests: string[]; suggested_hooks: string[]; simulated_need: string; feedback_lens: string; limitations: string[] };
+type Persona = { status: "observed" | "provisional" | "synthetic_demo"; observed_evidence: Evidence[]; inferred_interests: string[]; likely_motivations: string[]; content_preferences: string[]; suggested_hooks: string[]; confidence: string; freshness: string | null; personas: PlanningPersona[] };
 
 const labelFor = (field: string) => field.replaceAll("_", " ");
 
@@ -30,5 +31,6 @@ export function AudiencePersonaPanel() {
     {synthetic && <p className="demo-source-label">Synthetic demonstration data — not Meta OAuth data. Metrics are fictional and shown only to demonstrate Verdict’s analysis workflow.</p>}
     <div className="audience-evidence-grid">{evidence.map((item) => <article key={`${item.field}-${item.as_of}`}><b>{labelFor(item.field)}</b><strong>{Object.entries(item.values).map(([key, value]) => `${key}: ${value}`).join(" · ")}</strong><small>{item.source_label}</small></article>)}</div>
     {hypotheses.length > 0 && <div className="audience-next-step"><b>Planning hypotheses — not audience facts</b>{hypotheses.map((item) => <span key={item}>{item}</span>)}</div>}
+    {persona.personas.length > 0 && <div className="audience-persona-cards"><div className="audience-persona-heading"><b>Simulated audience planning lenses</b><span>Built from aggregate evidence and creator history—not real individuals.</span></div>{persona.personas.map((item) => <article key={item.id}><p>SIMULATED PERSONA</p><h3>{item.label}</h3><span>{item.strategic_use}</span><div>{item.observed_evidence.map((fact) => <small key={fact}>{fact}</small>)}</div><b>What this persona may need</b><em>{item.simulated_need}</em><b>Test next</b><em>{item.feedback_lens}</em></article>)}</div>}
   </section>;
 }

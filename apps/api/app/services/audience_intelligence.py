@@ -36,6 +36,23 @@ def _top_terms(media: list[dict]) -> list[str]:
     return [term for term, _ in Counter(tags).most_common(3)] or _media_keywords(media)[:3]
 
 
+def _high_signal_keywords(media: list[dict]) -> list[str]:
+    """Rank only creator-supplied terms by a bounded observed engagement weight."""
+    scores: Counter[str] = Counter()
+    for item in media:
+        metrics = item.get("observed_metrics") if isinstance(item.get("observed_metrics"), dict) else {}
+        weight = 1 + float(metrics.get("likes", 0)) + (4 * float(metrics.get("comments", 0)))
+        weight += (4 * float(metrics.get("saves", 0))) + (5 * float(metrics.get("shares", 0)))
+        for keyword in item.get("keywords", []):
+            if isinstance(keyword, str) and keyword.strip():
+                scores[keyword.strip().lower()] += weight
+    return [term for term, _ in scores.most_common(6)] or _media_keywords(media)
+
+
+def _pretty_term(term: str) -> str:
+    return re.sub(r"[_-]+", " ", term).strip().title()
+
+
 def derive_audience_hypotheses(aggregates: list[dict], media: list[dict]) -> dict[str, list[str] | str]:
     """Return evidence-grounded planning hypotheses, never individual claims."""
     formats = Counter(str(item.get("media_type", "post")) for item in media)
@@ -86,3 +103,84 @@ def derive_audience_hypotheses(aggregates: list[dict], media: list[dict]) -> dic
         "pacing_considerations": pacing,
         "cta_preferences": ctas,
     }
+
+
+def _ranked_values(aggregates: list[dict], field: str, *, exclude_other: bool = False) -> list[tuple[str, float]]:
+    """Return only numeric aggregate values, retaining source data without extrapolation."""
+    values: list[tuple[str, float]] = []
+    for aggregate in aggregates:
+        if aggregate.get("field") != field or not isinstance(aggregate.get("values"), dict):
+            continue
+        for label, value in aggregate["values"].items():
+            if not isinstance(value, (int, float)) or value < 0:
+                continue
+            if exclude_other and str(label).strip().lower() in {"other", "other_or_unspecified"}:
+                continue
+            values.append((str(label), float(value)))
+    return sorted(values, key=lambda item: (-item[1], item[0]))
+
+
+def derive_planning_personas(aggregates: list[dict], media: list[dict]) -> list[dict]:
+    """Create repeatable planning personas from actual stored aggregates and history.
+
+    These are not demographic stereotypes or individual audience profiles. Each
+    lens identifies an aggregate segment and attaches only the same creator-
+    history hypotheses available to every segment.
+    """
+    hypotheses = derive_audience_hypotheses(aggregates, media)
+    age_segments = _ranked_values(aggregates, "age_distribution")[:2]
+    locations = _ranked_values(aggregates, "top_locations", exclude_other=True)[:1]
+    terms = _top_terms(media)
+    high_signal_terms = _high_signal_keywords(media)
+    personas: list[dict] = []
+
+    for index, (age_band, share) in enumerate(age_segments):
+        theme_terms = high_signal_terms[index * 2:index * 2 + 2] or high_signal_terms[:2] or terms[:2]
+        theme = " + ".join(_pretty_term(term) for term in theme_terms) or "creator-history"
+        if index == 0:
+            feedback_lens = f"Hypothesis to test: make the {theme} payoff visible immediately, then give one concrete next step."
+            simulated_need = f"Hypothesis: this {age_band} aggregate segment may respond to a quick, concrete {theme} outcome; validate with later observed results."
+        else:
+            feedback_lens = f"Hypothesis to test: state the {theme} result first, then show one practical proof before the Reel moves on."
+            simulated_need = f"Hypothesis: this {age_band} aggregate segment may value a usable {theme} proof point; validate with later observed results."
+        evidence = [f"Aggregate age band {age_band}: {share:g}% of the supplied audience snapshot."]
+        if locations:
+            location, location_share = locations[0]
+            evidence.append(f"Top supplied location context: {location} ({location_share:g}%).")
+        if terms:
+            evidence.append(f"Recurring creator-history terms: {', '.join(f'#{term}' for term in terms[:2])}.")
+        personas.append({
+            "id": f"age-{age_band.lower().replace('+', 'plus').replace(' ', '-').replace('/', '-')}",
+            "label": f"{theme} learner · {age_band}",
+            "strategic_use": (
+                f"Simulated planning lens for the aggregate {age_band} context. Use it to test whether a clearer hook or structure helps; "
+                "it does not describe or predict any individual viewer."
+            ),
+            "observed_evidence": evidence,
+            "inferred_interests": list(hypotheses["inferred_interests"])[:3],
+            "suggested_hooks": list(hypotheses["suggested_hooks"])[:2],
+            "simulated_need": simulated_need,
+            "feedback_lens": feedback_lens,
+            "limitations": [
+                "Aggregate demographics do not show what any person watched, liked, or preferred.",
+                "Content guidance is a hypothesis based on creator history and should be tested against later observed results.",
+            ],
+        })
+
+    if personas:
+        return personas
+
+    if locations:
+        location, share = locations[0]
+        return [{
+            "id": f"location-{location.lower().replace(' ', '-')}",
+            "label": f"{location} planning lens",
+            "strategic_use": "Simulated planning lens for available location context, not an individual viewer profile.",
+            "observed_evidence": [f"Top supplied location context: {location} ({share:g}%)."],
+            "inferred_interests": list(hypotheses["inferred_interests"])[:3],
+            "suggested_hooks": list(hypotheses["suggested_hooks"])[:2],
+            "simulated_need": "Hypothesis: available location context may help frame a future test, but it does not establish a viewer preference.",
+            "feedback_lens": "Hypothesis to test: lead with one concrete outcome, then show the supporting proof before the Reel moves on.",
+            "limitations": ["Location data does not prove a viewer preference or content-performance relationship."],
+        }]
+    return []

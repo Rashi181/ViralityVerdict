@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, Request, status
 from app.repositories.audience import AudienceRepository
 from app.routes.auth import current_user
 from app.schemas.audience import AudienceImportRequest, AudienceImportResponse, AudiencePersonaResponse, PersonaFeedbackRequest
-from app.services.audience_intelligence import derive_audience_hypotheses
+from app.services.audience_intelligence import derive_audience_hypotheses, derive_planning_personas
 
 router = APIRouter()
 
@@ -46,11 +46,13 @@ def current_persona(request: Request, user: dict = Depends(current_user), repo: 
             unknowns=["Current aggregate audience demographics and geography are unavailable.", "No demographic-to-content-performance cross-tabulation is available."],
             confidence="low", data_coverage=f"No audience aggregates imported. Creator-history context: {format_basis}. User goal context: {', '.join(onboarding.get('content_goals', [])) or 'not provided'}.",
             freshness=None, feedback_note=feedback["note"] if feedback else None,
+            personas=[],
         )
 
     evidence = audience["aggregates"]
     freshness = max(item["as_of"] for item in evidence)
     hypotheses = derive_audience_hypotheses([item for item in evidence], [item for record in formats for item in record["media"]])
+    personas = derive_planning_personas([item for item in evidence], [item for record in formats for item in record["media"]])
     synthetic = all(item["source"] == "synthetic_demo" for item in evidence)
     source_label = "Synthetic-demo planning lens" if synthetic else "Audience-informed planning lens"
     return AudiencePersonaResponse(
@@ -65,4 +67,5 @@ def current_persona(request: Request, user: dict = Depends(current_user), repo: 
         unknowns=["No demographic-to-content-performance cross-tabulation was supplied.", "Interests, motivations, and individual viewer behavior remain unknown."],
         confidence="medium", data_coverage=f"{len(evidence)} aggregate audience fields; creator-history context: {format_basis}.",
         freshness=freshness, feedback_note=feedback["note"] if feedback else None,
+        personas=personas,
     )

@@ -289,6 +289,58 @@
   margin-top: .75rem;
 }
 
+.audience-persona-cards {
+  display: grid;
+  gap: .75rem;
+  margin-top: .75rem;
+}
+
+.audience-persona-heading {
+  display: grid;
+  gap: .2rem;
+}
+
+.audience-persona-heading b,
+.audience-persona-cards article h3,
+.audience-persona-cards article b {
+  color: var(--workspace-ink);
+}
+
+.audience-persona-heading span,
+.audience-persona-cards article > span,
+.audience-persona-cards article small,
+.audience-persona-cards article em {
+  color: var(--workspace-muted);
+  font-size: .78rem;
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.audience-persona-cards article {
+  display: grid;
+  gap: .55rem;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--workspace-border) 72%, #b65cf1);
+  border-radius: .9rem;
+  background: linear-gradient(125deg, color-mix(in srgb, var(--workspace-surface) 90%, #8a62df), var(--workspace-surface));
+}
+
+.audience-persona-cards article p {
+  margin: 0;
+  color: #f5a263;
+  font-size: .64rem;
+  font-weight: 800;
+  letter-spacing: .13em;
+}
+
+.audience-persona-cards article h3 { margin: 0; font-size: 1rem; }
+.audience-persona-cards article > div { display: grid; gap: .22rem; }
+.audience-persona-cards article b { margin-top: .1rem; font-size: .74rem; }
+
+:root[data-theme="light"] .audience-persona-cards article {
+  background: linear-gradient(125deg, #fff, #f7f3ff);
+}
+
 @media (max-width: 980px) {
   .creator-insights-panel,
   .insights-empty-state,
@@ -335,6 +387,40 @@
 
   .app-shell main {
     padding: 1.5rem 1rem 2.5rem;
+  }
+}
+
+/* Theme changes are a real View Transition, not a document screenshot. The old
+   rendered page contracts into the pressed switch through an irregular polygon
+   contour, leaving a few visibly wet edges before the new palette is exposed. */
+:root[data-ink-transition="spill"]::view-transition-group(root) {
+  animation-duration: 760ms;
+}
+
+:root[data-ink-transition="spill"]::view-transition-old(root) {
+  z-index: 2;
+  animation: verdict-ink-spill 760ms cubic-bezier(.2,.82,.22,1) both;
+  box-shadow: 0 0 2.2rem rgba(113, 79, 225, .28);
+  transform-origin: var(--ink-origin-x) var(--ink-origin-y);
+}
+
+:root[data-ink-transition="spill"]::view-transition-new(root) {
+  z-index: 1;
+  animation: none;
+}
+
+@keyframes verdict-ink-spill {
+  0% { clip-path: var(--ink-spill-start); filter: saturate(1.02); }
+  32% { clip-path: var(--ink-spill-wide); filter: saturate(1.08) contrast(1.02); }
+  72% { clip-path: var(--ink-spill-near); filter: saturate(1.04); }
+  100% { clip-path: var(--ink-spill-end); filter: saturate(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root[data-ink-transition="spill"]::view-transition-group(root),
+  :root[data-ink-transition="spill"]::view-transition-old(root),
+  :root[data-ink-transition="spill"]::view-transition-new(root) {
+    animation: none;
   }
 }
 

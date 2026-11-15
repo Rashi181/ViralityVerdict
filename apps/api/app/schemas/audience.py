@@ -31,6 +31,20 @@ class PersonaFeedbackRequest(BaseModel):
     note: str = Field(min_length=1, max_length=1000)
 
 
+class AudiencePlanningPersona(BaseModel):
+    """A synthetic strategic lens, never a profile of an individual viewer."""
+
+    id: str
+    label: str
+    strategic_use: str
+    observed_evidence: list[str] = Field(default_factory=list, max_length=4)
+    inferred_interests: list[str] = Field(default_factory=list, max_length=3)
+    suggested_hooks: list[str] = Field(default_factory=list, max_length=2)
+    simulated_need: str
+    feedback_lens: str
+    limitations: list[str] = Field(default_factory=list, max_length=3)
+
+
 class AudiencePersonaResponse(BaseModel):
     id: str
     status: Literal["observed", "provisional", "synthetic_demo"]
@@ -48,3 +62,4 @@ class AudiencePersonaResponse(BaseModel):
     data_coverage: str
     freshness: datetime | None
     feedback_note: str | None
+    personas: list[AudiencePlanningPersona] = Field(default_factory=list, max_length=3)
