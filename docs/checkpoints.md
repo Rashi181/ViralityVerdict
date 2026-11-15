@@ -188,3 +188,53 @@
 - Current blocker: live OAuth state/CSRF callback, remote token revocation, real sync, and deletion choices for future API-synced records must be completed and tested only after the approved Meta configuration exists. OAuth remains disabled.
 - User approval: approved
 - Commit/tag: `a71a9c6 feat: add read-only instagram safety controls`
+
+### M16 — Interactive landing experience
+
+- Branch and base commit: `feat/real-instagram-prep`, based on M15 checkpoint `399caff`
+- Scope / changed files: full-viewport `PerspectiveTunnelHero`, `LandingOverview`, `CreatorJourney`, polished three-visible-card `PersonaLanyardRail`, and persistent `ThemeProvider`/`ThemeToggle` client components; nine creator-supplied hero images stored locally under `apps/web/public/hero`; a viewport-fixed landing theme control with startup-race protection and a click-originating WebGL noise/droplet ink overlay; landing route/workspace-shell composition; scoped landing/theme CSS; and Framer Motion, GSAP, and html2canvas dependency locks.
+- Dependencies and credentials: `framer-motion` was added; no backend, Meta, creator-data, or model credential was used.
+- Acceptance criteria: the landing route explains Verdict's scope, capabilities, workflow, safety boundary, and access actions; it preserves the supplied reference components' 3D card corridor, pointer parallax, wheel/trackpad progression, card hover behavior, lanyard badge swing/flip, and minimal animated persona illustrations; the full-width hero fills the desktop viewport; the theme setting persists and uses a click-originating WebGL noise-and-droplet ink reveal, with a canvas fallback and an accessibility-safe immediate switch for reduced motion; examples remain clearly simulated; mobile behavior and sign-up/sign-in links work.
+- Automated results: pass — `pnpm lint && pnpm typecheck && pnpm build && git diff --check`; lint and typecheck passed, and Next.js produced all 14 existing application routes. Returning to the document top now resets the tunnel from its final hidden frame to its opening frame, preventing a blank hero after exploration. Four stale duplicate files under `.next/types/` were removed before an earlier typecheck; these were generated artifacts, not source files.
+- Manual verification: pending.
+- Known limitations and recovery: the supplied creator images are now packaged locally, so the landing tunnel has no runtime dependency on 21st.dev art URLs. Confirm the creator owns or is authorized to use them before public deployment.
+- User approval: pending.
+- Commit/tag: pending approval.
+
+### M17 — Official read-only Meta OAuth and first history sync
+
+- Branch and base commit: `feat/real-instagram-prep`, following the uncommitted M16 visual work.
+- Scope / changed files: CSRF-state-protected Facebook Login redirect/callback; encrypted, owner-scoped token persistence; a GET-only Meta client; initial authorized Professional-account media sync; connection/sync status UI; audit records; policy expansion for the needed read-only scopes; and fake-provider regression coverage.
+- Dependencies and credentials: no App ID, App Secret, access token, or real account was used. The local implementation becomes connectable only after the owner inserts credentials into ignored `.env` and registers the exact callback URI.
+- Acceptance criteria: the client may request only `instagram_basic`, `pages_read_engagement`, and `pages_show_list`; it rejects publishing, messages, comments, write methods, and cross-owner use. Tokens are encrypted/redacted. First sync stores only fields Meta returns. Aggregate demographic mapping, `instagram_manage_insights`, and remote provider revocation are explicitly deferred.
+- Automated results: pass — `pnpm test:api && pnpm lint && pnpm typecheck && pnpm build && git diff --check`; 21 API tests, lint, typecheck, and the 14-route production build passed. One existing third-party FastAPI/Starlette TestClient deprecation warning remains.
+- Manual verification: pending local Meta credential setup and account-owner consent. No live Meta operation has been attempted.
+- User approval: approved to implement on 2026-11-14; awaiting manual verification/commit approval.
+- Commit/tag: pending approval.
+
+### M18 — Provider-backed strategic Reel analysis
+
+- Scope / changed files: provider adapter, configured model/key settings, explicit owner-scoped analysis endpoint, JSON-schema-validated timestamped findings, remote Gemini-file deletion, persisted analysis output, and Reel Readiness UI action. Groq provides a temporary vision fallback over up to three locally extracted strategic stills.
+- Safety boundary: no Meta write action, no public media URL, no per-viewer data, no retention curve, and no persona reaction unless separately grounded in current authorized aggregate audience data.
+- Strategic review behavior: Gemini is prompted to inspect the opening and then sample sparse material changes; Groq is explicitly limited to an opening, hook-end, and one later/scene-change still. Neither path claims full frame-by-frame viewing when it has not occurred.
+- Dependency / blocker: a valid provider key, remaining provider credit, and one creator-owned short Reel are required for a live test. API keys stay in ignored `.env`; they must never be pasted into chat or committed. Gemini's configured project returned credit exhaustion during the owner-controlled test; no Gemini result was saved.
+- Automated results: pass — `pnpm test:api && pnpm lint && pnpm typecheck && pnpm build && git diff --check`; 23 API tests passed; web lint, typecheck, and the 15-route production build passed. Provider calls remain unverified until a user-controlled Groq request succeeds.
+- Manual verification: pending.
+- Commit/tag: pending user verification and approval.
+
+### M20 — Isolated synthetic demonstration dataset
+
+- Scope / changed files: environment-gated local fixture loader/API endpoints, `synthetic_demo` provenance, deterministic creator/audience synthesis, source-labeled UI, and fixture/owner-isolation tests.
+- Safety boundary: the fixture stays outside the repository and is disabled by default. The loader does not read prebuilt personas, taxonomy, interest scores, or recommendations.
+- Acceptance criteria: no output can present demo records as Meta/OAuth data; each owner sees only their own demo records; derived planning claims remain hypotheses.
+- Automated results: focused API regression passed — 5 tests (`test_demo_fixture.py`, creator, audience). Full API/web regression and manual local verification remain pending.
+- Commit/tag: pending user verification and approval.
+
+### M19 — Workspace clarity and responsive density
+
+- Scope / changed files: full-width workspace shell and content grid; immediate, persistent theme switch at the top-right; compact horizontal five-item Limelight-inspired core navigation; responsive two-column desktop composition for the Reel and audience surfaces; user-facing upload/evidence wording; a minimal Creator intelligence surface limited to observed creator history and available audience evidence; removal of Home, Planner, Strategist, and Publish & learn navigation controls plus CSV, raw aggregate-audience, raw trend-import, trend-feed, and persona-feedback forms from the primary workspace pages.
+- Safety boundary: no fallback API, creator data, account setting, or external service was deleted or modified. The visible Meta connection and read-only safety disclosure remain.
+- Acceptance criteria: wide screens no longer reserve a large unused right column; primary user flows use product-oriented labels rather than internal job/FFmpeg terms; manual authorized-import endpoints remain available for supported fallback use without being promoted in the demo UI.
+- Automated results: pass — `pnpm test:api && pnpm lint && pnpm typecheck && pnpm build && git diff --check`; 23 API tests, web lint, typecheck, and the 15-route production build passed.
+- Manual verification: pending user desktop/mobile visual check.
+- Commit/tag: pending user verification and approval.

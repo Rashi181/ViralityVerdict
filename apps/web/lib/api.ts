@@ -6,7 +6,9 @@ export type HealthResponse = {
 
 export type User = { id: string; email: string; display_name: string };
 
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000/api/v1";
+// Local development uses Next's same-origin proxy. A deployed environment
+// supplies its HTTPS API origin via NEXT_PUBLIC_API_BASE_URL.
+export const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL ?? "/api/v1";
 
 export async function getHealth(): Promise<HealthResponse> {
   const response = await fetch(`${apiBaseUrl}/health`, { cache: "no-store" });
@@ -22,7 +24,13 @@ export async function request<T>(path: string, options: RequestInit = {}): Promi
   const response = await fetch(`${apiBaseUrl}${path}`, {
     ...options,
     credentials: "include",
-    headers: { ...(options.body instanceof FormData ? {} : { "Content-Type": "application/json" }), ...options.headers },
+    // Do not attach a JSON content type to bodyless POSTs such as the
+    // read-only Instagram sync. Besides being unnecessary, it forces a CORS
+    // preflight in local Chrome development.
+    headers: {
+      ...(options.body && !(options.body instanceof FormData) ? { "Content-Type": "application/json" } : {}),
+      ...options.headers,
+    },
   });
   if (!response.ok) {
     const body = await response.json().catch(() => ({ detail: "Request failed" }));

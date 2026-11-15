@@ -15,12 +15,20 @@ class AnalysisEvidence(BaseModel):
     sampling_strategy: str
     source: Literal["ffmpeg_metadata", "ffmpeg_frame_sampling"]
 
+class ReelFinding(BaseModel):
+    timestamp_seconds: float
+    focus: Literal["hook", "pacing", "visual_change", "clarity", "audio", "on_screen_text", "cta", "accessibility"]
+    severity: Literal["low", "medium", "high"]
+    observation: str
+    recommendation: str
+
 
 class ReelReadinessResponse(BaseModel):
-    status: Literal["awaiting_ai_analysis", "unavailable"]
+    status: Literal["ready", "awaiting_ai_analysis", "unavailable"]
     score: None = None
     label: str
     evidence: list[AnalysisEvidence]
+    findings: list[ReelFinding] = []
     attention_risks: list[str]
     persona_reactions: list[str]
     cumulative_recommendation: str

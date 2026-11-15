@@ -156,3 +156,59 @@ The first M1 test run failed during collection because `Protocol` was imported f
 | Safety policy, encrypted vault, disconnect, and tenant isolation | `pnpm test:api` | Pass: 20 tests. The policy permits only `instagram_business_basic` and GET; a publishing scope and POST method are rejected; Fernet ciphertext differs from the raw token; owner disconnect/audit is isolated and does not expose the raw token. One existing third-party FastAPI/Starlette TestClient deprecation warning remains. |
 | Dependency lock / full web regression | `uv lock --project apps/api && pnpm lint && pnpm typecheck && pnpm build` | Pass: `cryptography` 45.0.7 is locked; lint, typecheck, and 14-page production build passed. |
 | Live Meta OAuth and remote revocation | No credentials or approved Meta app configuration | Skipped, not passed. OAuth remains disabled. |
+
+## M18 Provider-backed strategic Reel analysis — 2026-11-15
+
+| Check | Command | Result |
+| --- | --- | --- |
+| Private video / fake provider analysis | `pnpm test:api` | Pass: 23 tests. A generated private MP4 is analyzed only through a fake adapter; result findings persist per owner and another owner receives 404. No real provider request or key is used by this automated test. |
+| Web lint, typecheck, and build | `pnpm lint && pnpm typecheck && pnpm build` | Pass: the final production build generated 15 application routes. |
+| Diff safety | `git diff --check` | Pass |
+| Real Gemini analysis | Creator-provided `GEMINI_API_KEY` and a creator-owned draft | Blocked: provider returned `RESOURCE_EXHAUSTED` because the selected Gemini project has no prepaid credit. No result was saved. |
+| Real Groq strategic-frame analysis | Valid `GROQ_API_KEY`, `VERDICT_REEL_ANALYSIS_PROVIDER=groq`, and a newly uploaded creator-owned draft | Pending manual verification; Groq only receives up to three local strategic stills, not the whole video or audio. |
+
+## Public-to-workspace navigation — 2026-11-15
+
+| Check | Command | Result |
+| --- | --- | --- |
+| Landing, authentication, onboarding, workspace navigation | `pnpm lint && pnpm typecheck && pnpm build && git diff --check` | Pass: public actions preserve a safe requested destination, new accounts proceed to onboarding then dashboard, and the workspace exposes Home and Sign out. |
+
+## M19 Workspace clarity and responsive density — 2026-11-15
+
+| Check | Command | Result |
+| --- | --- | --- |
+| API regression | `pnpm test:api` | Pass: 23 API tests passed. Existing owner isolation, import validation, and safety-policy coverage remains intact. |
+| Web regression | `pnpm lint && pnpm typecheck && pnpm build && git diff --check` | Pass: lint and typecheck passed; Next.js built all 15 routes; the working-tree diff has no whitespace errors. The focused Creator intelligence UI compiles against the existing creator/audience contracts, and the immediate ink-bloom theme toggle plus compact horizontal Limelight-inspired five-item navigation build cleanly. |
+| Desktop visual review | In-app browser accessibility-tree review | Pass for structure: dashboard loaded with the full workspace header, connection card, and creator summary. Final subjective desktop/mobile visual review remains with the user. |
+
+## M16 Interactive landing experience — 2026-11-14
+
+| Check | Command | Result |
+| --- | --- | --- |
+| Web lint and typecheck | `pnpm lint && pnpm typecheck` | Pass |
+| Landing-route production build | `pnpm build` | Pass: Next.js 16.4.6 generated `/` plus all 13 existing product routes after the hero, overview, and lanyard components were added. |
+| Theme and landing regression | `pnpm lint && pnpm typecheck && pnpm build && git diff --check` | Pass: the full-viewport landing layout, floating landing control, startup-race protection, WebGL ink renderer with 2D canvas fallback, and all 14 routes compile cleanly. Four stale `.next/types/* 2.ts` generated files were removed before typecheck; no source files were removed. |
+| Ink and tunnel readability refinement | `pnpm lint && pnpm typecheck && pnpm build && git diff --check` | Pass: the WebGL spill now has a slower 2.35-second animation, broader noise and 28 leading droplets; tunnel cards are larger, closer to square, and use larger high-contrast labels. Visual fidelity remains pending user verification. |
+| Persona and workflow landing surfaces | `pnpm lint && pnpm typecheck && pnpm build && git diff --check` | Pass: the three-visible-card persona carousel and interactive six-stage creator-workflow orbit compile with the existing landing route and all product routes. Visual/readability verification remains pending user review. |
+| Auth visual redesign and contract regression | `pnpm lint && pnpm typecheck && pnpm build && git diff --check` | Pass: `/sign-in` and `/sign-up` compile with the guided branded form layout while retaining the existing auth endpoints, field names, redirect behavior, validation, and error handling. Manual submission verification remains pending. |
+| Reel feedback-board regression | `pnpm lint && pnpm typecheck && pnpm build && git diff --check` | Pass: `/analyze` compiles with owner-scoped video analysis, existing audience-persona and trend reads, and clear unavailable states. No attention, persona, or trend claim is rendered if the underlying authorized evidence is absent. Manual upload/inspect verification remains pending. |
+| Local hero imagery | `pnpm lint && pnpm typecheck && pnpm build && git diff --check` | Pass: the 3D tunnel now references nine locally packaged creator-supplied images, with no external 21st.dev card image URL. |
+| Hero return-to-top recovery | `pnpm lint && pnpm typecheck && pnpm build && git diff --check` | Pass: returning the document scroll position to the top resets the tunnel from its final hidden frame to its opening frame, preventing a blank hero after exploring the landing page. Manual browser verification remains pending. |
+| Full functional regression after visual work | `pnpm test:api && pnpm lint && pnpm typecheck && pnpm build && git diff --check` | Pass: 20 API tests passed, including tenant isolation, imports, audience/persona evidence handling, opportunities, captions, planning, manual-publish gating, video evidence, and Instagram safety policy; web lint, typecheck, and all 14 product routes built successfully. One existing third-party FastAPI/Starlette TestClient deprecation warning remains. |
+| M17 OAuth and first-history-sync regression | `pnpm test:api && pnpm lint && pnpm typecheck && pnpm build && git diff --check`; post-live-scope correction: `uv run --directory apps/api pytest tests/test_instagram_safety.py && pnpm typecheck && git diff --check` | Pass: 21 API tests passed in the full regression; after correcting the requested Facebook Login scopes, 2 focused API tests and TypeScript typecheck passed. A fake Meta provider verifies a single-use OAuth state, code exchange, encrypted per-owner token storage, owner-scoped first media sync, and no cross-owner sync. The first live Meta attempt was rejected before consent because the app had not enabled the required permission group; no account access was granted. One existing third-party FastAPI/Starlette TestClient deprecation warning remains. |
+| Manual interaction/accessibility check | Pending user verification | Not yet run. Verify that the floating control remains in the top-right while scrolling; it switches both directions and persists after refresh; then verify desktop pointer parallax, wheel/trackpad motion, product-section readability, Log in/Sign up routes, lanyard badge flip via click/Enter/Escape, animated illustrations, mobile layout, and operating-system reduced-motion behavior. |
+
+## M20 Isolated synthetic demonstration dataset — 2026-11-15
+
+| Check | Command | Result |
+| --- | --- | --- |
+| Fixture raw-data/provenance/tenant isolation | `uv run --directory apps/api pytest tests/test_demo_fixture.py tests/test_audience.py tests/test_creator.py` | Pass: 5 tests. The fixture loader ignores supplied personas, classifications, recommendation cases, and interest estimates; it produces only tenant-scoped synthetic records and deterministic hypotheses. |
+| Full API/web regression | Pending | Not run yet for M20. |
+
+## xAI Grok strategic-frame configuration — 2026-11-15
+
+| Check | Command | Result |
+| --- | --- | --- |
+| xAI-provider regression | `uv run --directory apps/api pytest tests/test_videos.py tests/test_demo_fixture.py` | Pass: 4 tests. The new xAI selection preserves the existing private-upload and no-write boundary. No real xAI request or API key was used by automated tests. |
+| Web typecheck | `pnpm --dir apps/web typecheck && git diff --check` | Pass. A stale generated duplicate Next type file was removed before the check; application source was unchanged by that cleanup. |
+| xAI descriptive-response normalization | `uv run --directory apps/api pytest tests/test_xai_reel.py tests/test_videos.py tests/test_demo_fixture.py` | Pass: 5 tests. Grok's descriptive focus labels (for example, “Hook promise”) are mapped into Verdict's fixed evidence taxonomy, and a single limitation string is stored as a list without inventing any findings or recommendation content. |

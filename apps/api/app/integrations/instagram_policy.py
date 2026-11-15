@@ -3,7 +3,16 @@
 No Meta write endpoint or write-capable permission belongs in this module.
 """
 
-READ_ONLY_SCOPES = frozenset({"instagram_business_basic"})
+# Read data only: basic professional-account history, Page discovery, aggregate
+# Insights, and the business-asset lookup that Meta requires for some Page roles.
+# The adapter below remains GET-only; this is never a publishing capability.
+READ_ONLY_SCOPES = frozenset({
+    "instagram_basic",
+    "instagram_manage_insights",
+    "pages_read_engagement",
+    "pages_show_list",
+    "business_management",
+})
 DENIED_SCOPES = frozenset({
     "instagram_business_content_publishing",
     "instagram_business_manage_comments",

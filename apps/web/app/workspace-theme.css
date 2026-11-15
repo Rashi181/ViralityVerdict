@@ -1,0 +1,715 @@
+/* This file is intentionally imported after styles.css so theme and responsive
+   workspace rules cannot be overridden by older landing-page declarations. */
+
+:root[data-theme="light"] .app-shell {
+  background: #f6f8fc;
+  color: #1f2a3e;
+}
+
+:root[data-theme="light"] .sidebar nav a {
+  color: #526079;
+}
+
+:root[data-theme="light"] .sidebar nav a.is-active {
+  color: #202a3b;
+}
+
+:root[data-theme="light"] .sidebar nav a i {
+  color: #62708a;
+}
+
+:root[data-theme="light"] .sidebar nav a.is-active i {
+  color: #4c42bd;
+}
+
+:root[data-theme="light"] .app-shell .theme-toggle {
+  border-color: #cfd8e8;
+  color: #26334a;
+  background: #ffffff;
+  box-shadow: 0 .45rem 1.2rem rgba(64, 82, 120, .12);
+}
+
+/* The product workspace uses the whole available canvas on desktop rather than
+   leaving a narrow column of cards beside a large unused area. */
+.app-shell {
+  grid-template-columns: 15.5rem minmax(0, 1fr);
+}
+
+.app-shell main {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: clamp(1.75rem, 3vw, 3.75rem);
+}
+
+.workspace-heading {
+  max-width: 72rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.workspace-heading h1 {
+  margin: .45rem 0 .7rem;
+}
+
+.workspace-heading .intro {
+  margin-bottom: 0;
+}
+
+.workspace-heading .theme-toggle {
+  flex: 0 0 auto;
+  margin-top: .15rem;
+}
+
+/* An original, vertical interpretation of the supplied Limelight Nav: the
+   selected destination has a soft light pool and a crisp leading indicator. */
+.limelight-nav {
+  position: relative;
+  display: grid;
+  gap: .35rem;
+  padding: .35rem;
+  border: 1px solid color-mix(in srgb, var(--workspace-border) 82%, transparent);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--workspace-surface) 76%, transparent);
+}
+
+.sidebar .limelight-nav a {
+  z-index: 0;
+  min-height: 2.85rem;
+  border-radius: .72rem;
+}
+
+.sidebar .limelight-nav a::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background: radial-gradient(circle at 12% 50%, rgba(255, 132, 181, .22), transparent 38%), linear-gradient(105deg, rgba(136, 115, 255, .24), rgba(136, 115, 255, .05));
+  box-shadow: inset 0 1px rgba(255,255,255,.08), 0 .5rem 1.35rem rgba(46, 38, 107, .18);
+  content: "";
+  opacity: 0;
+  transform: scale(.96);
+  transition: opacity .22s ease, transform .22s ease;
+}
+
+.sidebar .limelight-nav a.is-active::after {
+  border-color: rgba(203, 190, 255, .35);
+  opacity: 1;
+  transform: scale(1);
+}
+
+:root[data-theme="light"] .limelight-nav {
+  border-color: #e0e6f0;
+  background: rgba(255,255,255,.72);
+}
+
+:root[data-theme="light"] .sidebar .limelight-nav a.is-active::after {
+  border-color: rgba(125, 98, 213, .2);
+  background: radial-gradient(circle at 12% 50%, rgba(253, 142, 182, .18), transparent 42%), linear-gradient(105deg, rgba(119, 96, 222, .14), rgba(119, 96, 222, .03));
+  box-shadow: 0 .5rem 1.35rem rgba(76, 63, 144, .1);
+}
+
+.workspace-content {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 100rem;
+}
+
+.workspace-content > * {
+  grid-column: span 12;
+  min-width: 0;
+  margin-top: 0 !important;
+}
+
+.workspace-content > .audience-persona-panel,
+.workspace-content > .persona-feedback,
+.workspace-content > .trend-panel {
+  grid-column: span 6;
+}
+
+.workspace-content > .persona-feedback {
+  align-self: start;
+}
+
+.workspace-content > .video-upload-panel {
+  grid-column: span 5;
+  min-height: 100%;
+}
+
+.workspace-content > .reel-feedback {
+  grid-column: span 7;
+}
+
+.workspace-content > .caption-studio {
+  grid-column: span 12;
+}
+
+.video-upload-panel,
+.persona-feedback,
+.trend-panel,
+.audience-persona-panel {
+  min-height: 100%;
+}
+
+.demo-fixture-control { padding:clamp(1.25rem,3vw,2rem); }
+.demo-fixture-control h2 { margin:.4rem 0 .6rem; }
+.demo-fixture-control > p { max-width:68ch; line-height:1.55; }
+.demo-fixture-control button { margin:1rem 0 0; }
+.demo-fixture-result { margin-top:1rem; padding:.8rem 1rem; border:1px solid rgba(82,211,161,.35); border-radius:.7rem; color:#c7f3df!important; background:rgba(50,157,112,.12); font-size:.86rem; }
+.demo-source-label { margin:1rem 0!important; padding:.72rem .85rem; border:1px solid rgba(243,163,94,.42); border-radius:.65rem; color:#ffd3a6!important; background:rgba(230,132,60,.1); font-size:.8rem; line-height:1.45; }
+:root[data-theme="light"] .demo-fixture-result { color:#1d6a4d!important; background:#eefbf5; }
+:root[data-theme="light"] .demo-source-label { color:#89501e!important; background:#fff7ed; }
+
+.creator-insights-panel,
+.insights-empty-state {
+  grid-column: span 7 !important;
+}
+
+.audience-unavailable,
+.audience-persona-panel {
+  grid-column: span 5 !important;
+}
+
+.insight-kicker {
+  margin: 0 0 .55rem;
+  color: #ff9b68 !important;
+  font-size: .67rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.insights-empty-state,
+.audience-unavailable {
+  display: grid;
+  align-content: start;
+  gap: .7rem;
+  min-height: 16rem;
+}
+
+.insights-empty-state h2,
+.audience-unavailable h2,
+.creator-insights-panel h2,
+.audience-persona-panel h2 {
+  margin: 0;
+}
+
+.insights-empty-state p:not(.insight-kicker),
+.audience-unavailable p:not(.insight-kicker) {
+  max-width: 42rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.insights-empty-state .button {
+  justify-self: start;
+  margin-top: .35rem;
+}
+
+.creator-insights-panel header,
+.audience-persona-panel header {
+  margin-bottom: 1.4rem;
+}
+
+.creator-insights-panel header span,
+.audience-persona-panel header span {
+  display: block;
+  margin-top: .45rem;
+  color: var(--workspace-muted);
+  font-size: .8rem;
+}
+
+.insight-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .75rem;
+}
+
+.insight-metrics article,
+.insight-signals article,
+.audience-evidence-grid article,
+.audience-next-step {
+  display: grid;
+  gap: .28rem;
+  padding: 1rem;
+  border: 1px solid var(--workspace-border);
+  border-radius: .85rem;
+  background: color-mix(in srgb, var(--workspace-surface) 82%, #283a62);
+}
+
+.insight-metrics strong {
+  color: var(--workspace-ink);
+  font-size: clamp(1.4rem, 2vw, 2rem);
+  letter-spacing: -.05em;
+}
+
+.insight-metrics span,
+.insight-signals span,
+.audience-evidence-grid small,
+.audience-next-step span,
+.audience-unavailable small {
+  color: var(--workspace-muted);
+  font-size: .78rem;
+  line-height: 1.45;
+}
+
+.insight-signals {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .75rem;
+  margin-top: .75rem;
+}
+
+.insight-signals b,
+.audience-evidence-grid b,
+.audience-next-step b {
+  color: var(--workspace-ink);
+  font-size: .76rem;
+  text-transform: capitalize;
+}
+
+.audience-evidence-grid {
+  display: grid;
+  gap: .75rem;
+}
+
+.audience-evidence-grid strong {
+  color: var(--workspace-ink);
+  font-size: .9rem;
+  line-height: 1.4;
+}
+
+.audience-next-step {
+  margin-top: .75rem;
+}
+
+@media (max-width: 980px) {
+  .creator-insights-panel,
+  .insights-empty-state,
+  .audience-unavailable,
+  .audience-persona-panel {
+    grid-column: span 12 !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .workspace-heading {
+    align-items: center;
+  }
+
+  .insight-metrics,
+  .insight-signals {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 980px) {
+  .workspace-content > .audience-persona-panel,
+  .workspace-content > .persona-feedback,
+  .workspace-content > .trend-panel,
+  .workspace-content > .video-upload-panel,
+  .workspace-content > .reel-feedback {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 860px) {
+  .sidebar nav {
+    display: flex;
+    grid-template-columns: none;
+    gap: .25rem;
+    overflow-x: auto;
+    margin: 1rem 0 0;
+    padding-bottom: .15rem;
+  }
+
+  .sidebar nav a {
+    flex: 0 0 auto;
+  }
+
+  .app-shell main {
+    padding: 1.5rem 1rem 2.5rem;
+  }
+}
+
+/* Compact horizontal product navigation, adapted to Verdict from the supplied
+   Limelight reference. It replaces the space-heavy permanent sidebar. */
+.app-shell-limelight {
+  display: block;
+  min-height: 100vh;
+}
+
+.app-shell-limelight main {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: clamp(1.25rem, 2.5vw, 2.4rem) clamp(1.25rem, 4vw, 4.75rem) clamp(2.5rem, 5vw, 5rem);
+}
+
+.workspace-topbar {
+  display: grid;
+  grid-template-columns: minmax(8rem, 1fr) auto minmax(8rem, 1fr);
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 100rem;
+  margin: 0 auto clamp(2rem, 4vw, 4rem);
+}
+
+.workspace-topbar .brand {
+  justify-self: start;
+  text-decoration: none;
+}
+
+.workspace-topbar .limelight-nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .38rem;
+  padding: .72rem .42rem .42rem;
+  border: 1px solid color-mix(in srgb, var(--workspace-border) 86%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--workspace-surface) 90%, transparent);
+  box-shadow: 0 .75rem 2rem rgba(0, 0, 0, .14), inset 0 1px rgba(255,255,255,.05);
+  isolation: isolate;
+}
+
+.workspace-topbar .limelight-nav a {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  gap: .52rem;
+  padding: .7rem 1rem;
+  border-radius: 999px;
+  color: var(--workspace-muted);
+  font-size: .85rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  transition: color .2s ease, transform .2s ease;
+}
+
+.workspace-topbar .limelight-nav a i {
+  display: grid;
+  width: 1.15rem;
+  height: 1.15rem;
+  place-items: center;
+  color: currentColor;
+  font-size: .82rem;
+  font-style: normal;
+}
+
+.workspace-topbar .limelight-lamp {
+  position: absolute;
+  z-index: 1;
+  top: .52rem;
+  bottom: .42rem;
+  left: 0;
+  min-width: 3.25rem;
+  border: 1px solid rgba(215, 205, 255, .42);
+  border-radius: 999px;
+  background: radial-gradient(circle at 20% 50%, rgba(255, 141, 193, .4), transparent 34%), linear-gradient(105deg, rgba(147, 124, 255, .52), rgba(109, 86, 226, .16));
+  box-shadow: 0 .35rem 1.2rem rgba(99, 69, 207, .34), inset 0 1px rgba(255,255,255,.3);
+  pointer-events: none;
+  transition: transform .42s cubic-bezier(.22,.9,.22,1), width .42s cubic-bezier(.22,.9,.22,1), opacity .2s ease;
+}
+
+.workspace-topbar .limelight-lamp::before {
+  position: absolute;
+  top: -.72rem;
+  left: 50%;
+  width: .38rem;
+  height: .38rem;
+  border-radius: 50%;
+  background: #fff7cf;
+  box-shadow: 0 0 .5rem .16rem #fff3b0, 0 0 1.3rem .42rem rgba(215, 157, 255, .72);
+  content: "";
+  transform: translateX(-50%);
+}
+
+.workspace-topbar .limelight-lamp::after {
+  position: absolute;
+  top: -.35rem;
+  bottom: .2rem;
+  left: 50%;
+  width: min(7rem, 145%);
+  background: linear-gradient(180deg, rgba(255,242,190,.24), rgba(199,163,255,.12) 45%, transparent 100%);
+  clip-path: polygon(46% 0,54% 0,100% 100%,0 100%);
+  content: "";
+  filter: blur(2px);
+  opacity: .95;
+  transform: translateX(-50%);
+}
+
+.workspace-topbar .limelight-nav a:hover,
+.workspace-topbar .limelight-nav a.is-active,
+.workspace-topbar .limelight-nav a.is-spotlit {
+  color: #fff;
+}
+
+.workspace-topbar .limelight-nav a:hover {
+  transform: translateY(-1px);
+}
+
+:root[data-theme="light"] .workspace-topbar .limelight-lamp {
+  border-color: rgba(109, 77, 188, .32);
+  background: radial-gradient(circle at 20% 50%, rgba(250, 148, 191, .38), transparent 34%), linear-gradient(105deg, rgba(180, 157, 255, .52), rgba(136, 108, 231, .14));
+  box-shadow: 0 .35rem 1.2rem rgba(116, 87, 208, .26), inset 0 1px rgba(255,255,255,.6);
+}
+
+:root[data-theme="light"] .workspace-topbar .limelight-nav a:hover,
+:root[data-theme="light"] .workspace-topbar .limelight-nav a.is-active,
+:root[data-theme="light"] .workspace-topbar .limelight-nav a.is-spotlit {
+  color: #2b1e49;
+}
+
+/* Landing controls are explicit buttons so their affordance is clear on touch,
+   mouse, and keyboard—not plain text navigation. */
+.landing-theme-control .landing-control-button,
+.landing-theme-control .landing-workspace-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .42rem;
+  min-height: 2.55rem;
+  margin: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .18s ease, filter .18s ease, background .18s ease;
+}
+
+.landing-theme-control .landing-wordmark {
+  padding: .42rem .7rem .42rem .48rem;
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  background: rgba(18,13,30,.76);
+  box-shadow: none;
+}
+
+.landing-theme-control .landing-wordmark b {
+  display: grid;
+  width: 1.48rem;
+  height: 1.48rem;
+  place-items: center;
+  border-radius: .48rem;
+  color: #fff;
+  background: linear-gradient(135deg,#ff825e,#e65ba8 50%,#7166ec);
+}
+
+.landing-theme-control .landing-control-button:not(.landing-wordmark) {
+  padding: .52rem .75rem;
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  background: rgba(18,13,30,.76);
+}
+
+.landing-theme-control .landing-control-button:hover,
+.landing-theme-control .landing-workspace-button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+
+:root[data-theme="light"] .landing-theme-control .landing-wordmark,
+:root[data-theme="light"] .landing-theme-control .landing-control-button:not(.landing-wordmark) {
+  border-color: #d1c4dd;
+  color: #2c2138;
+  background: rgba(255,255,255,.9);
+}
+
+/* Onboarding carries the same intentional entry experience as sign-up, while
+   making the extra creator-context fields quick to scan and complete. */
+.onboarding-shell {
+  min-height: 42rem;
+}
+
+.onboarding-intro {
+  gap: 2rem;
+}
+
+.onboarding-intro h1 {
+  max-width: 10ch;
+}
+
+.onboarding-progress {
+  display: grid;
+  gap: .7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.onboarding-progress li {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  color: #7f8ba2;
+  font-size: .8rem;
+}
+
+.onboarding-progress b {
+  display: grid;
+  width: 1.8rem;
+  height: 1.8rem;
+  place-items: center;
+  border: 1px solid #3a4660;
+  border-radius: 50%;
+  color: #aeb9cf;
+  font-size: .67rem;
+}
+
+.onboarding-progress .is-complete,
+.onboarding-progress .is-current {
+  color: #f1f4fb;
+  font-weight: 700;
+}
+
+.onboarding-progress .is-complete b {
+  border-color: #45daaa;
+  color: #0a231b;
+  background: #45daaa;
+}
+
+.onboarding-progress .is-current b {
+  border-color: #ec6ac5;
+  color: #fff;
+  background: linear-gradient(135deg,#f56e69,#cf4ee6 58%,#7e64ed);
+  box-shadow: 0 0 .9rem rgba(222,83,205,.45);
+}
+
+.onboarding-card {
+  max-width: 42rem;
+}
+
+.onboarding-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 0 1rem;
+}
+
+.onboarding-card select,
+.onboarding-card textarea {
+  width: 100%;
+  padding: .85rem .95rem;
+  border: 1px solid #35435e;
+  border-radius: .65rem;
+  color: #f5f7fc;
+  background: #0d1422;
+  font: inherit;
+}
+
+.onboarding-card textarea {
+  min-height: 6.1rem;
+  resize: vertical;
+}
+
+.onboarding-wide {
+  margin-top: 1rem !important;
+}
+
+.onboarding-note {
+  margin: 1rem 0 0;
+  color: #8995ab;
+  font-size: .76rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.onboarding-loading {
+  display: grid;
+  align-content: center;
+  gap: 1rem;
+}
+
+.onboarding-loading .button {
+  width: fit-content;
+  margin: 0;
+  padding: .7rem 1rem;
+}
+
+:root[data-theme="light"] .onboarding-progress li { color: #728096; }
+:root[data-theme="light"] .onboarding-progress .is-complete,
+:root[data-theme="light"] .onboarding-progress .is-current { color: #273247; }
+:root[data-theme="light"] .onboarding-progress b { border-color: #d1d9e6; color: #63718a; }
+:root[data-theme="light"] .onboarding-card select,
+:root[data-theme="light"] .onboarding-card textarea { border-color: #d5dbe7; color: #252a39; background: #fbfcff; }
+:root[data-theme="light"] .onboarding-note { color: #68738a; }
+
+@media (max-width: 760px) {
+  .onboarding-shell { min-height: 100svh; }
+  .onboarding-intro { min-height: 27rem; }
+  .onboarding-grid { grid-template-columns: 1fr; }
+  .onboarding-card { max-width: none; }
+}
+
+.workspace-actions {
+  display: flex;
+  justify-self: end;
+  align-items: center;
+  gap: .5rem;
+}
+
+.workspace-actions .theme-toggle,
+.workspace-actions .sign-out-button {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.workspace-actions .sign-out-button {
+  padding: .52rem .7rem;
+  border: 1px solid var(--workspace-border);
+  border-radius: 999px;
+  color: var(--workspace-muted);
+  background: transparent;
+  font-size: .72rem;
+  font-weight: 700;
+}
+
+.workspace-actions .sign-out-button:hover {
+  color: var(--workspace-ink);
+}
+
+:root[data-theme="light"] .workspace-topbar .limelight-nav {
+  border-color: #e0e5ef;
+  background: rgba(255,255,255,.84);
+  box-shadow: 0 .75rem 2rem rgba(52, 64, 93, .1), inset 0 1px #fff;
+}
+
+:root[data-theme="light"] .workspace-topbar .limelight-nav a.is-active {
+  color: #28334d;
+}
+
+:root[data-theme="light"] .workspace-topbar .limelight-nav a.is-active::after {
+  border-color: rgba(118, 96, 214, .2);
+  background: radial-gradient(circle at 20% 50%, rgba(255, 150, 185, .2), transparent 38%), linear-gradient(105deg, rgba(127, 104, 235, .18), rgba(127, 104, 235, .05));
+  box-shadow: 0 .35rem 1.15rem rgba(78, 62, 164, .13), inset 0 1px #fff;
+}
+
+@media (max-width: 860px) {
+  .workspace-topbar {
+    grid-template-columns: 1fr auto;
+  }
+
+  .workspace-topbar .limelight-nav {
+    grid-column: span 2;
+    grid-row: 2;
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+
+  .app-shell-limelight main {
+    padding: 1.25rem 1rem 2.5rem;
+  }
+}

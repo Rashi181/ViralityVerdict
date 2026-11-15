@@ -1,6 +1,6 @@
 # Feature status
 
-Last audited: 2026-11-14. Source: M15 implementation checkpoint `a71a9c6`.
+Last audited: 2026-11-15. Source: M15 implementation checkpoint `a71a9c6` plus uncommitted M20 demo-fixture work.
 
 | Area | Status | Evidence / next gate |
 | --- | --- | --- |
@@ -18,13 +18,18 @@ Last audited: 2026-11-14. Source: M15 implementation checkpoint `a71a9c6`.
 | M10 Strategist | Approved; checkpointed | Authenticated read-tool inventory and explicit provider-unavailable state manually verified on `feat/m10-strategist` |
 | M11 Publishing | Approved; checkpointed | Eligibility gate, explicit manual handoff, and no-publish disclosure manually verified on `feat/m11-publishing-learning` |
 | M12 Launch readiness | Approved; checkpointed | Security headers, production cookie/origin configuration, accessibility baseline, repeatable demo runbook, and security regression tests manually approved and committed on `feat/real-instagram-prep` |
-| M13 Guided workspace and Caption & Hashtag Studio | Approved; checkpointed | Focused product pages, shared navigation shell, general caption options, free-text refinement prompt, source-labeled deterministic hashtag suggestions, and no exposed synthetic imports on `feat/real-instagram-prep` |
+| M13 Guided workspace and Caption & Hashtag Studio | Approved; checkpointed | Focused product pages, shared navigation shell, general caption options, free-text refinement prompt, source-labeled deterministic hashtag suggestions, and no exposed synthetic imports on `feat/real-instagram-prep`. Public landing now routes new visitors through sign-up/onboarding and returning visitors to the workspace; workspace includes Home and Sign out controls. |
 | M14 Reel-analysis foundation | Approved; checkpointed | Private hybrid FFmpeg frame sampling, owner-scoped evidence endpoint, and Reel Readiness UI with honest AI-analysis-pending state on `feat/real-instagram-prep` |
 | M15 Read-only Instagram safety foundation | Approved; checkpointed | Encrypted token vault, permanent read-only policy, owner-scoped disconnect/audit records, safety UI, and caption-keyword evidence were manually approved and checkpointed as `a71a9c6` on `feat/real-instagram-prep` |
+| M16 Interactive experience and visual system | Implemented; awaiting manual verification | Landing route now has a full-viewport 3D tunnel with creator-supplied local imagery, product explanation/workflow/features/safety sections, a polished simulated-persona credential carousel, an interactive six-stage workflow orbit, correct access actions, and a persistent light/dark WebGL ink-spill theme; sign-in/sign-up use guided branded forms and Analyze Reel uses an evidence-first feedback board without API changes |
+| M17 Official read-only Meta OAuth and first history sync | Implemented; awaiting local Meta verification | CSRF-state-protected Facebook Login redirect/callback, encrypted per-owner token storage, GET-only Meta media sync, connection/sync UI, tenant-scoped audit, and mocked-provider regression coverage. No live credential or account has been used. |
+| M18 Provider-backed strategic Reel analysis | Implemented; awaiting manual provider verification | Explicit, owner-scoped private-draft analysis runs only after a creator action. Gemini accepts the private video and deletes its temporary remote file; Groq and xAI Grok each receive at most three local strategic stills (opening, hook-end, and material change). All paths persist bounded timestamped hypotheses, never publish or alter the account, and cannot provide viewer demographics or real retention. |
+| M19 Workspace clarity and responsive density | Implemented; awaiting manual verification | The workspace now uses the full desktop canvas, has a consistent content grid, and keeps an immediately persistent theme switch at the top-right. Its compact horizontal, limelight-style five-destination navigation focuses on dashboard, connection, insights, ideas, and Reel analysis. Creator intelligence now shows only observed creator history and available audience evidence; it hides trends, feedback controls, raw IDs, and speculative/manual audience data. Home, Planner, Strategist, and Publish & learn are no longer visible workspace controls; CSV/raw audience/raw trend import forms are also hidden, while their authorized fallback APIs and direct routes remain intact. |
 | Architecture plan | Approved | `docs/implementation-plan.md` |
 | Product feature coverage | Planned | M0–M12 matrix covers every specified surface; no niche-switch feature included |
 | External integrations | Unverified / blocked pending credentials | See implementation plan and known issues |
 | M0 test suite | Passed with one third-party deprecation warning | API tests, web lint, TypeScript typecheck, and production build ran; details in `docs/test-results.md` |
-| Synthetic creator import | Removed from product | Only creator-authorized manual import is exposed; private automated test data does not appear in the UI or API |
+| Synthetic creator import | Local judge-demo mode only | Disabled by default and absent from production. When explicitly enabled locally, the UI labels it fictional/non-OAuth and the loader ignores pre-authored personas, classifications, interest scores, and recommendations. |
+| M20 Isolated synthetic demonstration dataset | Implemented; awaiting manual verification | Environment-gated local fixture loader ingests only raw synthetic posts/demographics. Existing creator/audience services derive repeatable planning hypotheses and source-label every synthetic result. |
 
 Do not change a status to complete without a code location, test result, and manual verification record.

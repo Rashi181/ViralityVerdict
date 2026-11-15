@@ -9,6 +9,18 @@ from app.repositories.connections import InMemoryConnectionRepository
 from app.repositories.users import InMemoryUserRepository
 from app.services.auth import AuthService
 from app.services.token_vault import TokenVault
+from app.integrations.meta_oauth import MetaSnapshot
+
+
+class FakeMetaClient:
+    def authorization_url(self, state: str) -> str: return f"https://meta.example/authorize?state={state}"
+    def exchange_code(self, code: str) -> str:
+        assert code == "approved-code"
+        return "provider-token"
+    def read_snapshot(self, access_token: str) -> MetaSnapshot:
+        assert access_token == "provider-token"
+        return MetaSnapshot("ig-1", "creator", [{"id": "media-1", "timestamp": "2026-11-14T12:00:00+00:00", "caption": "#test", "media_product_type": "REELS", "views": 12, "like_count": 3, "comments_count": 1}], [])
+    def revoke(self, access_token: str) -> bool: return False
 
 
 def test_instagram_policy_vault_disconnect_and_audit_are_safe_and_owner_scoped() -> None:
@@ -32,7 +44,7 @@ def test_instagram_policy_vault_disconnect_and_audit_are_safe_and_owner_scoped()
     repository.save_connection(owner_id, encrypted, ["instagram_business_basic"])
 
     safety = owner.get("/api/v1/instagram/safety").json()
-    assert safety["requested_scopes"] == ["instagram_business_basic"]
+    assert safety["requested_scopes"] == ["business_management", "instagram_basic", "instagram_manage_insights", "pages_read_engagement", "pages_show_list"]
     assert safety["allowed_http_methods"] == ["GET"]
     assert "instagram_business_content_publishing" in safety["denied_scopes"]
     with pytest.raises(ValueError):
@@ -46,3 +58,37 @@ def test_instagram_policy_vault_disconnect_and_audit_are_safe_and_owner_scoped()
     assert owner_audit[0]["action"] == "instagram_disconnect"
     assert raw_token not in str(owner_audit)
     assert other.get("/api/v1/instagram/audit").json() == []
+
+
+def test_oauth_state_is_single_use_and_sync_is_owner_scoped() -> None:
+    key = Fernet.generate_key().decode()
+    settings = Settings(None, "test-session-secret-that-is-at-least-32-chars", meta_app_id="app-id", meta_app_secret="app-secret", meta_redirect_uri="http://localhost:8000/api/v1/instagram/callback", meta_token_encryption_key=key)
+    app = create_app(AuthService(InMemoryUserRepository(), "test-session-secret-that-is-at-least-32-chars"), settings=settings, connection_repository=InMemoryConnectionRepository(), meta_client=FakeMetaClient())
+    owner, other = TestClient(app), TestClient(app)
+    for client, email in ((owner, "owner2@example.com"), (other, "other2@example.com")):
+        assert client.post("/api/v1/auth/sign-up", json={"email": email, "password": "correct-horse-battery-staple", "display_name": "Creator"}).status_code == 201
+    start = owner.get("/api/v1/instagram/connect", follow_redirects=False)
+    assert start.status_code == 302
+    state = start.headers["location"].split("state=")[1]
+    callback = owner.get(f"/api/v1/instagram/callback?code=approved-code&state={state}", follow_redirects=False)
+    assert callback.headers["location"].endswith("/connect?instagram=connected")
+    assert owner.post("/api/v1/instagram/sync").json()["media_count"] == 1
+    assert other.post("/api/v1/instagram/sync").status_code == 409
+    assert owner.get(f"/api/v1/instagram/callback?code=approved-code&state={state}", follow_redirects=False).headers["location"].endswith("instagram=cancelled")
+
+
+def test_sync_returns_recoverable_error_for_unlinked_professional_account() -> None:
+    class UnlinkedPageMetaClient(FakeMetaClient):
+        def read_snapshot(self, access_token: str) -> MetaSnapshot:
+            raise ValueError("No Professional Instagram account linked to an authorized Facebook Page was returned by Meta")
+
+    key = Fernet.generate_key().decode()
+    settings = Settings(None, "test-session-secret-that-is-at-least-32-chars", meta_app_id="app-id", meta_app_secret="app-secret", meta_redirect_uri="http://localhost:8000/api/v1/instagram/callback", meta_token_encryption_key=key)
+    app = create_app(AuthService(InMemoryUserRepository(), "test-session-secret-that-is-at-least-32-chars"), settings=settings, connection_repository=InMemoryConnectionRepository(), meta_client=UnlinkedPageMetaClient())
+    owner = TestClient(app)
+    assert owner.post("/api/v1/auth/sign-up", json={"email": "unlinked@example.com", "password": "correct-horse-battery-staple", "display_name": "Creator"}).status_code == 201
+    state = owner.get("/api/v1/instagram/connect", follow_redirects=False).headers["location"].split("state=")[1]
+    assert owner.get(f"/api/v1/instagram/callback?code=approved-code&state={state}", follow_redirects=False).status_code == 302
+    response = owner.post("/api/v1/instagram/sync")
+    assert response.status_code == 409
+    assert "No Professional Instagram account linked" in response.json()["detail"]

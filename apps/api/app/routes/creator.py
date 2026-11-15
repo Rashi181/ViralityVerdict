@@ -21,6 +21,7 @@ class CreatorSummary(BaseModel):
     observed_hashtags: list[str]
     observed_caption_keywords: list[str]
     hook_samples: list[str]
+    data_source: str
     limitations: list[str]
 
 
@@ -35,6 +36,7 @@ def profile(request: Request, user: dict = Depends(current_user)) -> CreatorSumm
             sample_size=0, date_start=None, date_end=None, total_views=0,
             average_engagement_rate=None, top_media_ids=[], recurring_formats={},
             observed_hashtags=[], observed_caption_keywords=[], hook_samples=[],
+            data_source="none",
             limitations=["No imported creator history is available."],
         )
 
@@ -50,20 +52,22 @@ def profile(request: Request, user: dict = Depends(current_user)) -> CreatorSumm
     top = sorted(media, key=lambda item: item["views"], reverse=True)[:3]
     hashtags = Counter(
         tag.lower() for item in media
-        for tag in re.findall(r"(?<!\w)#([\w]+)", item.get("caption", ""))
+        for tag in [*re.findall(r"(?<!\w)#([\w]+)", item.get("caption", "")), *[str(value).removeprefix("#") for value in item.get("hashtags", [])]]
     )
     ignored_words = {"about", "after", "and", "from", "have", "into", "just", "later", "that", "the", "this", "three", "tips", "with", "your"}
     keywords = Counter(
         token.lower()
         for item in media
-        for token in re.findall(r"\b[a-zA-Z][a-zA-Z0-9]{3,}\b", re.sub(r"(?<!\w)#[\w]+", "", item.get("caption", "")))
+        for token in [*re.findall(r"\b[a-zA-Z][a-zA-Z0-9]{3,}\b", re.sub(r"(?<!\w)#[\w]+", "", item.get("caption", ""))), *[str(value) for value in item.get("keywords", [])]]
         if token.lower() not in ignored_words
     )
     hooks = [
         item["caption"].strip().splitlines()[0][:160]
         for item in top if item.get("caption", "").strip()
     ]
-    limitations = ["Metrics are user-imported and not API-verified."]
+    sources = {record["source"] for record in records}
+    data_source = "synthetic_demo" if sources == {"synthetic_demo"} else "instagram_api" if "instagram_api" in sources else "user_import"
+    limitations = ["Synthetic demonstration fixture. These invented metrics are not Meta API observations." if data_source == "synthetic_demo" else "Metrics include creator-authorized Meta API observations." if data_source == "instagram_api" else "Metrics are user-imported and not API-verified."]
     if len(media) < 5:
         limitations.append("Sparse history: comparisons are directional, not causal.")
     limitations.append(
@@ -77,5 +81,5 @@ def profile(request: Request, user: dict = Depends(current_user)) -> CreatorSumm
         recurring_formats=dict(Counter(item["media_type"] for item in media)),
         observed_hashtags=[f"#{tag}" for tag, _ in hashtags.most_common(5)],
         observed_caption_keywords=[keyword for keyword, _ in keywords.most_common(8)],
-        hook_samples=hooks, limitations=limitations,
+        hook_samples=hooks, data_source=data_source, limitations=limitations,
     )

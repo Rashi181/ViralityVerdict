@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, Request, status
 from app.repositories.audience import AudienceRepository
 from app.routes.auth import current_user
 from app.schemas.audience import AudienceImportRequest, AudienceImportResponse, AudiencePersonaResponse, PersonaFeedbackRequest
+from app.services.audience_intelligence import derive_audience_hypotheses
 
 router = APIRouter()
 
@@ -49,16 +50,19 @@ def current_persona(request: Request, user: dict = Depends(current_user), repo: 
 
     evidence = audience["aggregates"]
     freshness = max(item["as_of"] for item in evidence)
+    hypotheses = derive_audience_hypotheses([item for item in evidence], [item for record in formats for item in record["media"]])
+    synthetic = all(item["source"] == "synthetic_demo" for item in evidence)
+    source_label = "Synthetic-demo planning lens" if synthetic else "Audience-informed planning lens"
     return AudiencePersonaResponse(
-        id="audience-informed-planning-lens", status="observed", label="Audience-informed planning lens",
-        intended_use="A synthetic planning aid grounded in the listed aggregate audience evidence, not an individual viewer profile.",
+        id="audience-informed-planning-lens", status="synthetic_demo" if synthetic else "observed", label=source_label,
+        intended_use="A planning aid grounded in the listed aggregate audience evidence and creator history, not an individual viewer profile.",
         observed_evidence=evidence,
-        inferred_interests=[], likely_motivations=[],
-        content_preferences=[f"Hypothesis: test {format_basis} formats first because they are the imported creator-history context, not because a demographic segment is proven to prefer them."],
-        suggested_hooks=["Hypothesis: compare a direct value-first opening against the current creator style."],
-        pacing_considerations=["Hypothesis: test pacing as an experiment; supplied aggregates do not establish retention preferences."],
-        cta_preferences=["Hypothesis: test one clear, low-friction CTA; supplied aggregates do not establish CTA preference."],
+        inferred_interests=hypotheses["inferred_interests"], likely_motivations=hypotheses["likely_motivations"],
+        content_preferences=hypotheses["content_preferences"],
+        suggested_hooks=hypotheses["suggested_hooks"],
+        pacing_considerations=hypotheses["pacing_considerations"],
+        cta_preferences=hypotheses["cta_preferences"],
         unknowns=["No demographic-to-content-performance cross-tabulation was supplied.", "Interests, motivations, and individual viewer behavior remain unknown."],
-        confidence="medium", data_coverage=f"{len(evidence)} user-imported aggregate audience fields; creator-history context: {format_basis}.",
+        confidence="medium", data_coverage=f"{len(evidence)} aggregate audience fields; creator-history context: {format_basis}.",
         freshness=freshness, feedback_note=feedback["note"] if feedback else None,
     )

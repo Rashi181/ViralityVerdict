@@ -27,7 +27,7 @@ class ImportRequest(BaseModel):
 
 class ImportResponse(BaseModel):
     id: str
-    source: Literal["user_import"]
+    source: Literal["user_import", "instagram_api", "synthetic_demo"]
     status: Literal["completed"]
     media_count: int
     created_at: datetime

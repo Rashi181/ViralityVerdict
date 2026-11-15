@@ -10,7 +10,7 @@ AudienceField = Literal["age_distribution", "gender_distribution", "top_location
 class AudienceAggregate(BaseModel):
     field: AudienceField
     values: dict[str, str | int | float] = Field(min_length=1, max_length=50)
-    source: Literal["user_import"]
+    source: Literal["user_import", "instagram_api", "synthetic_demo"]
     source_label: str = Field(min_length=1, max_length=160)
     as_of: datetime
 
@@ -33,7 +33,7 @@ class PersonaFeedbackRequest(BaseModel):
 
 class AudiencePersonaResponse(BaseModel):
     id: str
-    status: Literal["observed", "provisional"]
+    status: Literal["observed", "provisional", "synthetic_demo"]
     label: str
     intended_use: str
     observed_evidence: list[AudienceAggregate]

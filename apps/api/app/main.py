@@ -25,7 +25,10 @@ from app.routes.planner import router as planner_router
 from app.routes.strategist import router as strategist_router
 from app.routes.publishing import router as publishing_router
 from app.routes.system import router as system_router
+from app.routes.demo import router as demo_router
 from app.services.auth import AuthService
+from app.integrations.meta_oauth import MetaClient
+from app.integrations.gemini_reel import GeminiReelAnalyzer, GroqReelAnalyzer, ReelAnalyzer, XAIReelAnalyzer
 
 
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):
@@ -39,10 +42,14 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         return response
 
 
-def create_app(auth_service: AuthService | None = None, import_repository: ImportRepository | None = None, audience_repository: AudienceRepository | None = None, trend_repository: TrendRepository | None = None, opportunity_repository: OpportunityRepository | None = None, video_repository: VideoRepository | None = None, settings: Settings | None = None, connection_repository: ConnectionRepository | None = None) -> FastAPI:
+def create_app(auth_service: AuthService | None = None, import_repository: ImportRepository | None = None, audience_repository: AudienceRepository | None = None, trend_repository: TrendRepository | None = None, opportunity_repository: OpportunityRepository | None = None, video_repository: VideoRepository | None = None, settings: Settings | None = None, connection_repository: ConnectionRepository | None = None, meta_client: MetaClient | None = None, reel_analyzer: ReelAnalyzer | None = None) -> FastAPI:
     app = FastAPI(title="Verdict API", version="0.1.0", openapi_url="/api/v1/openapi.json")
     configured_settings = settings or Settings.from_environment()
-    app.add_middleware(CORSMiddleware, allow_origins=list(configured_settings.web_origins), allow_credentials=True, allow_methods=["GET", "POST", "PUT"], allow_headers=["Content-Type"])
+    # Chrome treats the local web app (localhost:3000) calling the local API
+    # (localhost:8000) as a private-network request. Explicitly allow that
+    # development-only preflight so authenticated read-only syncs can reach
+    # the API; the origin allowlist above still restricts callers.
+    app.add_middleware(CORSMiddleware, allow_origins=list(configured_settings.web_origins), allow_credentials=True, allow_methods=["GET", "POST", "PUT"], allow_headers=["Content-Type"], allow_private_network=True)
     app.add_middleware(SecurityHeadersMiddleware)
     if auth_service is None:
         app.state.settings = configured_settings
@@ -74,7 +81,21 @@ def create_app(auth_service: AuthService | None = None, import_repository: Impor
     if connection_repository is not None: app.state.connection_repository = connection_repository
     elif not hasattr(app.state, "connection_repository"): app.state.connection_repository = InMemoryConnectionRepository()
     if not hasattr(app.state,"planner_repository"): app.state.planner_repository=InMemoryPlannerRepository()
+    if meta_client is not None: app.state.meta_client = meta_client
+    if reel_analyzer is not None:
+        app.state.reel_analyzer = reel_analyzer
+        app.state.reel_analysis_provider = "test"
+    elif configured_settings.reel_analysis_provider == "groq":
+        app.state.reel_analyzer = GroqReelAnalyzer(configured_settings.groq_api_key, configured_settings.groq_reel_model)
+        app.state.reel_analysis_provider = "groq"
+    elif configured_settings.reel_analysis_provider == "xai":
+        app.state.reel_analyzer = XAIReelAnalyzer(configured_settings.xai_api_key, configured_settings.xai_reel_model)
+        app.state.reel_analysis_provider = "xai"
+    else:
+        app.state.reel_analyzer = GeminiReelAnalyzer(configured_settings.gemini_api_key, configured_settings.gemini_model)
+        app.state.reel_analysis_provider = "gemini"
     app.include_router(system_router, prefix="/api/v1", tags=["system"])
+    app.include_router(demo_router, prefix="/api/v1", tags=["demo"])
     app.include_router(auth_router, prefix="/api/v1", tags=["auth"])
     app.include_router(imports_router, prefix="/api/v1", tags=["imports"])
     app.include_router(instagram_router, prefix="/api/v1", tags=["instagram"])
